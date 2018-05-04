@@ -1,0 +1,9 @@
+<apex:page docType="html-5.0" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+
+<script>
+    jQuery(function($){
+        alert('hello world');
+    });
+</script>
+
+</apex:page>

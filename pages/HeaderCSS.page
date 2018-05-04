@@ -1,0 +1,10 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false">
+
+    <link href="{!$Resource.XCDemo_Theme}/css/dragtable.css" rel="stylesheet" type="text/css" />
+    <link href="{!$Resource.XCDemo_Theme}/css/owl.carousel.css" rel="stylesheet" type="text/css" />
+    <link href="{!$Resource.XCDemo_Theme}/css/animate.css" rel="stylesheet" type="text/css" />
+    <link href="{!$Resource.XCDemo_Theme}/css/color-switcher.css" rel="stylesheet" type="text/css" />
+    <link href="{!$Resource.XCDemo_Theme}/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="{!$Resource.XCDemo_Theme}/css/color/red.css" id="main-color" rel="stylesheet" type="text/css" />    
+    
+</apex:page>

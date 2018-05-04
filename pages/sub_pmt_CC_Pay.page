@@ -1,0 +1,272 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" controller="cc_xc_CCPayment_Controller">
+
+<script id="PaymentCC-Both" type="text/template">
+    <div class="ccPaymentOuterContainer">   
+        <!---<h2 class="title">CC{{pageLabelMap 'MyWallet_AddPymtMtd'}}</h2>---->
+        <div class="main_content_large_right_container">
+            <div class="alert alert-error ccPayment-messagingSection-Error" style="display: none"></div>
+            
+            <form id="newCCForm" action="" class="newCCForm" forceSSL="true">
+                <fieldset>
+                    <legend>Credit Card</legend>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Card Type
+                                <select name="paymentType">
+                                    <option value="Visa">Visa</option>
+                                    <option value="Mastercard">Master Card</option>
+                                    <option value="Amex">American Express</option>
+                                    <option value="Discover">Discover Card</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            Card Number
+                            <input type="text" name="accountNumber"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Expiration
+                                <select name="expirationMonth">
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>                        
+                                    <option value="03">03</option>                        
+                                    <option value="04">04</option>                        
+                                    <option value="05">05</option>                        
+                                    <option value="06">06</option>                        
+                                    <option value="07">07</option>                        
+                                    <option value="08">08</option>                        
+                                    <option value="09">09</option>                        
+                                    <option value="10">10</option>                        
+                                    <option value="11">11</option>                        
+                                    <option value="12">12</option>
+                                </select>
+                            </label>
+                            <label>
+                                <select name="expirationYear">
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                CVV
+                        <input type="text" name="CVV" />
+                            </label>
+                        </div>
+                    </div>
+
+                    {{#ifDisplay 'WLT.Enabled'}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row actionButtons">
+                                <label>
+                                    <span class="poLabel SavePayment fieldLabel">{{pageLabelMap 'MyWallet_SavePayment'}}</span>
+                                    <input type="checkbox" name="saveAsStoredPayment" id="saveAsStoredPayment" value="true" />
+                                </label>
+                            </div>
+                            <div class="row displayName">
+                                <label>
+                                    <span class="poLabel Name fieldLabel">{{pageLabelMap 'MyWallet_NameOpt'}}</span>
+                                    <input type="text" name="displayName" id="displayName" maxlength="50" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {{/ifDisplay}}
+
+                </fieldset>
+
+                <p class="two_buttons">
+                    <div class="right">
+                        <input type="button" class="button makeCCPayment" id="btnMakeCCPayment" data-id="newCCForm" value="{{pageLabelMap 'Payment_MakePayment'}}" />
+                        <input type="hidden" name="accountType" value="cc"/>
+                    </div>
+                </p>
+            </form>
+             
+        </div>
+    </div>
+
+</script>
+
+<script>
+    jQuery(function($) {  
+         CCRZ.pubSub.on('view:PaymentsCCView:refresh', function(theView) {
+              $('.payment').hide();
+              if(false){ }
+              else{
+                $('.paymentTypesContainer .nav-tabs a[href="#po"]').hide();
+                $('.paymentTypesContainer .tab-content #po').hide();
+              }
+        });
+        
+        CCRZ.models.PaymentsCCModel = CCRZ.CloudCrazeModel.extend();   
+        //if(true){
+            CCRZ.views.PaymentsCCView = CCRZ.CloudCrazeView.extend({
+                viewName : "PaymentsCCView",
+                managedSubView : true,
+                templateDesktop : CCRZ.util.template("PaymentCC-Both"),
+                templatePhone : CCRZ.util.template("PaymentCC-Both"),
+                init : function(options){
+                    this.selector = options.selector;
+                    this.render();
+                    CCRZ.pubSub.trigger('action:paymentViewInit',this);
+                },
+                events: {
+                    "click .makeCCPayment" : "makeCCPayment"
+                },
+                validateInfo: function(formName, fieldData) {
+                    $("#"+formName).validate({
+                        invalidHandler: function(event, validator) {
+                            CCRZ.handleValidationErrors(event, validator, 'ccPayment-messagingSection-Error', false);
+                        },
+                         rules: {
+                            accountNumber : { required: true, minlength: 13, maxlength: 16 },
+                            CVV : { required: true, minlength: 3, maxlength: 4 }
+                        },
+                        messages: {
+                            accountNumber : { required : 'Card number is required', minlength: 'Card number is not valid', maxlength: 'Card number is not valid' },
+                            CVV : { required: 'CVV is required', minlength: 'CVV is not valid', maxlength: 'CVV is not valid' }
+                        },
+                        errorPlacement: function(error, element) {
+                        }
+                    });
+                    return $("#"+formName).valid();
+                },
+    
+                parentPreRender : function(){
+                    //Look for the instantiated iframe
+                    //Detach it from the DOM
+                    //Re-render the view but don't create the iframe
+                    //Re-attach the iframe as appropriate in the rendered view
+                },
+                renderDesktop : function(){
+                    this.setElement(this.selector);
+                    this.data={};
+                    this.$el.html(this.templateDesktop(this.data));
+                },
+                renderPhone : function(){
+                    this.setElement(this.selector);
+                    this.data={};
+                    this.$el.html(this.templatePhone(this.data));
+                },    
+                makeCCPayment : function(event){
+                    var formName = $(event.target).data("id");
+                    //console.log('333333333333 before 111111111 ------------  formData ');
+                    //  alert("111 " + formName);
+                    var formData = form2js(formName, '.', false, function(node) {}, false);
+                    // alert("222");
+                    
+                    if (this.validateInfo(formName, formData)) {
+                        
+                        
+                        formData.amount = "1.00";
+                        
+                        JSON.stringify(formData);
+
+                        /* 
+                        make remote action call;
+                        call back function:= if success;                         
+                        */                    
+                        console.log('Before remote call');
+                        var remoteCall = _.extend(CCRZ.RemoteInvocation,{className:'cc_xc_CCPayment_Controller'});         
+                        remoteCall.invokeCtx('doChargeCreditCard', formData.accountNumber, formData.expirationYear, formData.expirationMonth, formData.paymentType, formData.accountType, formData.CVV,
+                                             function(resp){
+                                                 $("#id_error_message").html("");
+                                                 console.log('inside the handler for the remote call');
+                                                 console.log("response from server is " + resp.data);
+                                                 if(resp && resp.success){
+                                                     //var formData2 = form2js(formName, '.', false, function(node) {}, false);
+                                                     //remove credit card number and leave only last 4 digits
+                                                     
+                                                     formData.accountNumber = formData.accountNumber.substring(formData.accountNumber.length - 4);
+                                                     console.log('Printing Authnet TX ID ' + resp.data['transactionID']);
+                                                     //formData.transactionCode = '12345678';
+                                                     //console.log('johnson before nhk world  ------------  formData2 ' + JSON.stringify(formData2));
+                                                     //CCRZ.pubSub.trigger('action:processPayment', formData);
+                                                     console.log('Printing TX object ' + resp.data['txObject']);
+                                                     CCRZ.pubSub.trigger('action:processPayment', resp.data['txObject']);
+                                                     
+                                                     //CCRZ.pubSub.trigger('action:processPayment', formData2);
+                                                     //$("#id_error_message").html("<span style='color:red; font-weight:bold; '>" + resp.data['theString'] + "</span>");
+                                                     console.log("parsed error is " + resp.data['theString']);
+                                                     console.log("Contact is" + resp.data['CONTACT']);
+                                                     console.log("Cart is" + resp.data['CART']);
+                                                 } 
+                                                 else{
+                                                     console.log("things failed2");
+                                                     console.log("parsed error is " + resp.data['theString']);
+                                                     $("#id_error_message").html("<span style='color:red; font-weight:bold;'>" + resp.data['theString'] + "</span>");
+                                                     console.log("error from chargent is " + resp.data['DebugString']);
+                                                     console.log("server error is" + resp.data['MSG']);
+                                                     console.log("Cart is" + resp.data['CART']);
+                                                     console.log("Contact is" + resp.data['CONTACT']);
+                                                     console.log("Order is" + resp.data['ORDER']);
+                                                 }
+                                                 
+                                                 
+                                             },  {buffer:false,escape:false,nmsp:false}
+                                            );   
+                        console.log('johnson after ------------ ' + remoteCall);
+                    }
+                },
+                
+            });
+        /* }
+        else{
+            CCRZ.views.PaymentsCCView = CCRZ.CloudCrazeView.extend({
+                viewName : "PaymentsCCView",
+                managedSubView : true,
+                templateDesktop : CCRZ.util.template("PaymentCCNotAllowed"),
+                templatePhone : CCRZ.util.template("PaymentCCNotAllowed"),
+                init : function(options){
+                    this.selector = options.selector;
+                    this.render();
+                    CCRZ.pubSub.trigger('action:paymentViewInit',this);
+                },  
+                parentPreRender : function(){
+                    //Look for the instantiated iframe
+                    //Detach it from the DOM
+                    //Re-render the view but don't create the iframe
+                    //Re-attach the iframe as appropriate in the rendered view
+                },
+                renderDesktop : function(){
+                    this.setElement(this.selector);
+                    this.data={};
+                    this.$el.html(this.templateDesktop(this.data));
+                },
+                renderPhone : function(){
+                    this.setElement(this.selector);
+                    this.data={};
+                    this.$el.html(this.templatePhone(this.data));
+                },
+            });
+        }*/
+        CCRZ.pubSub.trigger('action:paymentViewReady','cc',function(options){
+            CCRZ.payment = CCRZ.payment||{views:{}};
+            CCRZ.payment.views.cc = new CCRZ.views.PaymentsCCView({
+                model : new CCRZ.models.PaymentsCCModel(),
+                selector : options.selector
+            });
+        });
+    });
+   
+
+</script>
+    
+    
+
+</apex:page>

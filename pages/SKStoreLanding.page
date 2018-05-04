@@ -1,0 +1,5 @@
+<apex:page id="cc_EmptyPage" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+<script>
+    window.location = '{!$Page.ccrz__HomePage}';
+</script>    
+</apex:page>

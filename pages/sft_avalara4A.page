@@ -1,0 +1,197 @@
+<apex:page controller="avalaraController4A" id="pge" >
+   
+       <script
+    src="https://code.jquery.com/jquery-1.12.4.min.js"
+    integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+    crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    $( document ).ready(function() {
+        console.log( "ready!" );
+        
+        $("#id_getTax2").click(function(){
+            alert("howdy ho");
+            
+            var xtotal =$(".input_total").val();
+            
+           
+            
+            var xline1 =$(".input_line1").val();
+             alert(xline1);
+            var xline2 =$(".input_line2").val();
+            var xcity =$(".input_city").val();
+            var xstate =$(".input_state").val();
+            var xpostalcode =$(".input_postalcode").val();
+            var xcountry =$(".input_country").val();
+            var xtotal =$(".input_total").val();
+            
+            avalaraInfo(xline1, xline2, xcity, xstate,xpostalcode, xcountry, xtotal);
+            
+            
+            });
+        
+        
+        function avalaraInfo(Line1, Line2, city, state, PostalCode, country, total){
+            
+            console.log("inside avalaraInfo");
+            
+            
+            //make a Salesforce Javascript Remoting call
+            avalaraController4A.getAVATAXReply( Line1, Line2, city, state, PostalCode, country, total, handleFedexAnswer);
+            
+        }
+        
+        
+        
+        //defined handler function for the javscript remoting results
+        function handleFedexAnswer(result,event){
+            
+            
+            //an exception occurred
+            if(event.type == 'exception') {
+                alert(event.message);
+            } 
+            //all is alright
+            else {
+  				
+                console.log(result);
+                  
+                
+                $("#id_div_results").html(result);
+                console.log($("#id_div_results").html());                        
+                
+                var obj = $.parseJSON($("#id_div_results").html());
+                
+                //console.log(obj);
+                
+                /*
+                //if the JSON has an error; display the error message
+                if(obj['Error']){
+                    
+                    console.log('there is an error');
+                    $('#id_infotitle').html('<strong>Error Message: </strong>' + obj['Error']  );
+                    $('#id_infotitle').addClass( "alert" );
+                    $('#id_infotitle').addClass( "alert alert-danger" );
+                    $('#id_infotitle').css('display', 'block');
+                }
+                else{
+                    //if there is no error, use Backbone/Handlebar to display the result
+                     var collection1 = new allResults();
+                     var obj = $.parseJSON($("#id_div_results").html());
+                    
+                    //loop through the JSON that's returned and turn it into a list
+                    $.each(obj, function (key, value) {
+                        var res1 = new oneResult();
+                        res1.set("name", key.replace(new RegExp('_', 'g'), ' '));
+                        res1.set("price", value);
+                        collection1.add(res1);
+                    });
+                    var allRESView = new allResultsView({
+                        collection: collection1
+                    });
+                    allRESView.render().el;
+                    
+                    $('#id_result_title').html('<h4 style="text-center">Available Shipping Products and Rates<h4>');
+                    
+                    
+                    console.log('done')                          
+                }*/
+                
+                  
+            
+            }         
+            
+            
+        }
+        
+        
+        
+        
+        
+    });
+    
+
+    
+    </SCRIPT>
+    
+    <apex:form >
+        <apex:PageBlock title="Johnson Avalara Tax API">
+            
+            <apex:pageBlockSection title="Items In cart">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >HP Printer</apex:outputLabel>
+                </apex:pageBlockSectionItem>
+                <br/>
+                
+               <!-- <apex:pageBlockSectionItem >
+                   <apex:outputLabel >Quatity</apex:outputLabel>
+                    <apex:inputText value="{!count}" /> </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >amount</apex:outputLabel>
+                    <apex:inputText value="{!amount}" /> </apex:pageBlockSectionItem> 
+ 				-->
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Total</apex:outputLabel>
+                    <apex:inputText value="{!total}" styleClass="input_total"   /> </apex:pageBlockSectionItem>              
+                
+            </apex:pageBlockSection>
+            
+            
+            <apex:pageBlockSection title="Address">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Address Line1 </apex:outputLabel>
+                    <apex:inputText id="Line1" value="{!Line1}"  styleClass="input_line1"  /> </apex:pageBlockSectionItem>
+                <br/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Address Line2 </apex:outputLabel>
+                    <apex:inputText id="Line2" value="{!Line2}"   styleClass="input_line2"  /> </apex:pageBlockSectionItem>
+                <br/>    
+                
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >city </apex:outputLabel>
+                    <apex:inputText id="city" value="{!city}"   styleClass="input_city"  /> </apex:pageBlockSectionItem>
+                <br/>            
+                 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >state </apex:outputLabel>
+                    <apex:inputText id="state" value="{!state}" styleClass="input_state" /> </apex:pageBlockSectionItem>
+                <br/>            
+            
+           
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >PostalCode </apex:outputLabel>
+                    <apex:inputText id="PostalCode" value="{!PostalCode}" styleClass="input_postalcode"   /> </apex:pageBlockSectionItem>
+                <br/> 
+           
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Country </apex:outputLabel>
+                    <apex:inputText id="country" value="{!country}" styleClass="input_country"  /> </apex:pageBlockSectionItem>
+                <br/> 
+
+            <!----> 
+            </apex:pageBlockSection>
+            <apex:commandButton value="GetTex" action="{!getTex}" reRender="projectList" status="loading" />
+            <!--  <apex:commandButton value="Validate Address" action="{!validateAddress}" reRender="showresult" />-->
+            
+            
+            <input type="button" id="id_getTax2" value="Get Avalara Info" style="float:right;" />
+            
+            
+            <apex:actionstatus id="loading">
+                <apex:facet name="start">
+                    <div class="waitingHolder"> <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." /> 
+					<span class="waitingDescription">Loading...</span> </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:PageBlock>
+         <apex:outputPanel id="projectList">
+                <apex:outputPanel id="showresult">
+            <br/> {!result} </apex:outputPanel>
+        
+        </apex:outputPanel>
+
+               
+    </apex:form>
+  <div id="id_div_results"></div>
+    
+</apex:page>

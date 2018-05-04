@@ -1,0 +1,27 @@
+<apex:page docType="html-5.0" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+    
+
+<section class="card bg-blue text-center">
+  
+  <div class="callout">
+    <h1>Our Mission</h1>
+    <p>To provide the electrical distribution, specialty lighting, and OEM industries with a comprehensive range of traditional lamps, LEDs, and ballasts, along with the very best possible service and attention to detail.</p>
+  </div>
+
+</section>
+
+
+<section class="card text-center">
+  
+  <h3>Wholesale prices from over 150 vendors including...</h3>
+
+  <ul class="list-inline">
+    <li><img src="//placehold.it/200x75" alt="" /></li>
+    <li><img src="//placehold.it/200x75" alt="" /></li>
+    <li><img src="//placehold.it/200x75" alt="" /></li>
+  </ul>
+</section>
+    
+
+    
+</apex:page>

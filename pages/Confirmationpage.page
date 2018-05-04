@@ -1,0 +1,11 @@
+<apex:page controller="XCPayment">
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations - Payment confirmation</h1>
+  <apex:form >
+      <apex:outputText >{!cardno}</apex:outputText>
+      <apex:outputText >{!name}</apex:outputText>
+      <apex:outputText >{!paymentType}</apex:outputText>
+      <apex:outputText >{!expMonth}</apex:outputText>
+      <apex:outputText >{!expYear}</apex:outputText>
+  </apex:form>
+</apex:page>

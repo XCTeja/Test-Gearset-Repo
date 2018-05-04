@@ -1,0 +1,118 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false" controller="SportsStore_ctrl_CartInclude">
+<script id="SportsStore-CartDetail-ActionTotals-View" type="text/template">
+  <ul class="shopping_cart">
+   <li><button class="btn slim continueShoppingButton" name="" type="button" >{{pageLabelMap 'CartInc_ContinueShopping'}}</button></li>
+   {{#if false }}
+   {{ else }}
+    {{#ifStoreSetting 'AutoCalcPriceAdjust__c'}}
+    {{else}}
+     <li><button class="btn slim getExtPricingButton" type="button" >{{pageLabelMap 'CartInc_ApplyDiscounts'}}</button></li>
+    {{/ifStoreSetting}}
+    <li><button class="btn slim" data-toggle="modal" data-target="#wishMod" name="" type="button" >{{pageLabelMap 'Create_Cart_Wishlist'}}</button></li>
+   {{/if}}
+   <li><button class="btn slim updateCartButton" name="" type="button" >{{pageLabelMap 'CartInc_Update'}}</button></li>
+   {{#if false }}
+    {{#ifDisplay 'C.EmailAnon'}}
+     <li><a href="#emailModal" id="emailCartLink" data-toggle="modal"><button class="btn slim remove" type="button" >{{pageLabelMap 'CartOrderEmailer_Header'}}</button></a></li>
+    {{/ifDisplay}}
+   {{else}}
+    {{#ifDisplay 'C.EnableEmailCart'}}
+     <li><a href="#emailModal" id="emailCartLink" data-toggle="modal"><button class="btn slim remove" type="button" >{{pageLabelMap 'CartOrderEmailer_Header'}}</button></a></li>
+    {{/ifDisplay}}
+   {{/if}}
+   <!--************-->
+   {{#if false }}
+    {{#ifDisplay 'rfq.GuestUser'}}
+     <li><a href="#rfqModal" id="rfqLink" data-toggle="modal"><button class="btn slim remove" type="button" >{{pageLabelMap 'CartRFQForm_Header'}}</button></a></li>
+    {{/ifDisplay}}
+   {{else}}
+    {{#ifDisplay 'rfq.LoggedIn'}}
+     <li><a href="#rfqModal" id="rfqLink" data-toggle="modal"><button class="btn slim remove" type="button" >{{pageLabelMap 'CartRFQForm_Header'}}</button></a></li>
+    {{/ifDisplay}}
+   {{/if}}
+
+   <!--************-->
+  </ul>
+  <ul class="checkout clear_right">
+   {{#if subTotal}}
+    <li class="grand_total">{{pageLabelMap 'CartInc_Subtotal'}}: {{{price subTotal}}}</li>
+   {{/if}}
+   {{#if this.totalInfo}}
+    <li class="cart_total_amount">{{this.totalInfo}}</li>
+   {{/if}}
+   <li class="totalsmessagingSection"></li>
+   {{#if this.cartItems}}
+    {{#ifNotEquals this.cartItems.length 0}}
+     {{#if this.allowCheckout}}
+      {{#ifEquals this.preventCheckout false}}
+       <li>
+        <button type="button" class="btn btn-primary wide checkOutBtn">{{pageLabelMap 'CartInc_Checkout'}}</button>
+       </li>
+      {{/ifEquals}}      
+     {{else}}
+         <button id="requestCreditOverrideBtn" type="button" onclick="processRequestCreditOverride()"    class="btn btn-primary wide requestCreditOverrideBtn">{{pageLabelMap 'RequestCreditOverride'}}</button>
+     {{/if}}
+    {{/ifNotEquals}}
+   {{/if}}
+  </ul>
+
+  {{#ifStoreSetting 'Display_Cart_Coupon__c'}}
+   <div class="discount_code_container">
+   {{#if this.hasCoupon}}
+    <form id="couponClearForm">
+    <h2 class="title">{{pageLabelMap 'CartInc_discountCodes'}}</h2>
+    <div class="discount_code">
+      <p>{{pageLabelMap 'CartInc_AppliedCoupon'}} {{this.couponName}}</p>
+      <p><button id="clearCouponBtn" type="button">{{pageLabelMap 'CartInc_ClearCoupon'}}</button></p>
+     </div>
+    </form>
+   {{else}}
+    <form id="couponAddForm">
+     <h2 class="title">{{pageLabelMap 'CartInc_discountCodes'}}</h2>
+     <div class="discount_code">
+      <p id="couponAddError"></p>
+     <p>{{pageLabelMap 'CartInc_EntercouponCode'}}</p>
+      <p><input type="text" id="addCouponId" name="couponId" /></p>
+      <div class="couponMessagingSection-Error"></div>
+      <p><button id="addCouponBtn" type="button">{{pageLabelMap 'CartInc_ApplyCoupon'}}</button></p>
+    </div>
+    </form>
+   {{/if}}
+   </div>
+  {{/ifStoreSetting}}
+ </script>
+ 
+ <script>
+ CCRZ.uiProperties.CartDetailView.partials.actionsTotals = '#SportsStore-CartDetail-ActionTotals-View';
+ function processRequestCreditOverride() {
+    var remoteController = _.extend({
+        className : 'SportsStore_ctrl_CartInclude',
+        createCreditCase : function(cartId) {
+            this.invokeCtx(
+                'createCreditCase',
+                cartId, 
+                function(resp, evt) {
+                    if(evt.status) {
+                        if(resp && resp.success){//response was successful
+                            //Execute next business call here
+                        } else {
+                            //handle response error here
+                        }
+                    } else {
+                        //handle standard RemoteAction failure here
+                    }
+                },
+                {
+                    buffer:false, //this call will be executed by itself
+                    nmsp : false //defines that this is a call to a subscriber class
+                }
+            );//end invokeCtx call
+        }
+    }, CCRZ.RemoteInvocation);
+    
+    remoteController.createCreditCase(CCRZ.pagevars.currentCartID);
+ }
+ 
+</script>
+
+</apex:page>

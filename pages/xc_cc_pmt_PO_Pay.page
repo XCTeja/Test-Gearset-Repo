@@ -1,0 +1,15 @@
+<apex:page applyHtmlTag="false" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" cache="false">
+
+<script id="PaymentProcessor-XC" type="text/template">
+    <div class="paymentOuterContainer">
+        <div>
+            This is a test
+        </div>
+    </div>
+</script>
+<script>
+    jQuery(function($){
+        CCRZ.uiProperties.StoredPaymentsPOView.desktop.tmpl = 'PaymentProcessor-XC';            
+    });
+</script>
+</apex:page>
