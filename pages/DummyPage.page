@@ -1,0 +1,13 @@
+<apex:page controller="DumyClass">
+<apex:form >
+  <apex:pageBlock >
+      <apex:pageBlockSection title="input data">
+          <apex:inputText value="{!data}"/>
+      </apex:pageBlockSection>
+      <apex:pageBlockSection title="output data">
+          <apex:outputText value="{!data}"/>
+      </apex:pageBlockSection>
+      <apex:commandButton action="{!display}" value="Save" id="theButton"/>
+  </apex:pageBlock>
+</apex:form>
+</apex:page>

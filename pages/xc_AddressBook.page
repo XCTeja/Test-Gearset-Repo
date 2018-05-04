@@ -1,0 +1,63 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+    
+    <script id="XC_MyAccount-AddressBook-Desktop" type="text/template">
+    <h1>HELLO!</h1>
+  <h2 class="title">{{pageLabelMap 'MyAccount_AddressBook'}}</h2>
+  <div class="main_content_large_solo_container">
+   <div class="orderPaginationSec" />
+   <p>
+    {{#if preventAddrEdit}} {{else}} <input type="button" class="addAddress" data-id="" value="{{pageLabelMap 'AddressBook_Add_New_Address'}}"/><br/> {{/if}}
+   </p>
+   <table class="shopping_cart">
+     <thead>
+        <tr>
+         <th>{{pageLabelMap 'Address'}}</th>
+         {{#ifDisplay 'addr.shAdrTy'}}
+          <th>{{pageLabelMap 'ProductDetails_DocumentTab_Type'}}</th>
+         {{/ifDisplay}}
+         {{#if preventAddrEdit}} {{else}}
+          <th></th>
+         {{/if}}
+        </tr>
+     </thead>
+     <tbody>
+    {{#each this.addressList}}
+     <tr>
+      <td>
+       {{> addressDisplay this.addressBean}}
+      </td>
+      {{#ifDisplay 'addr.shAdrTy'}}
+       <td>
+        {{#each addressTypes}}
+         <div class="status">{{pageLabelMap addressType}}</div>
+        {{/each}}
+       </td>
+      {{/ifDisplay}}
+      {{#if ../preventAddrEdit}} {{else}}
+       <td>
+
+        <input type="button" class="openModalAddr" data-id="{{sfid}}" value="{{pageLabelMap 'Action_Edit'}}" />&#160;
+
+        {{#if this.addressBean.addrReadOnly}} {{else}}
+        <input type="button" class="deleteAddress" data-id="{{sfid}}" value="{{pageLabelMap 'Action_Delete'}}"/>&#160;
+        {{/if}}
+       </td>
+      {{/if}}
+     </tr>
+    {{/each}}
+    </tbody>
+   </table>
+   <div id="modalSec"></div>
+  </div>
+ </script>
+    
+    <script>
+        jQuery(function($){
+            CCRZ.uiProperties.myAddressBookView.desktop.tmpl = 'XC_MyAccount-AddressBook-Desktop';
+        });
+    </script>
+    
+
+    
+    
+</apex:page>

@@ -1,0 +1,24 @@
+<apex:page id="cc_xc_tmpl_TwoColRD" applyHtmlTag="false"
+	docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false">
+		
+    	<div class="row">
+        	<div class="col-md-3">
+                <div class="filterContainer"></div>
+            </div>
+            <div class="col-md-9">
+                <apex:insert name="WidgetBoxC" />
+                <apex:insert name="Banner" />
+                <div class="promotion-box-Banner"></div>
+                <div class="effwig"></div>
+                <apex:insert name="ProductSpotlight" />
+                <apex:insert name="body" />
+                <apex:insert name="PromosCenter" />
+                <apex:insert name="FeaturedProducts" />
+                <apex:insert name="GuideProducts" />
+                <apex:insert name="UpsellProducts" />
+                <apex:insert name="ProductReviews" />
+                <apex:insert name="CenterX" />
+            </div>
+    	</div>
+
+</apex:page>

@@ -1,0 +1,58 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false">
+  <script id="XCmenu-desktop" type="text/template">
+ <div class="navbar main_navigation_container">
+ <div class="navbar-header">
+                <a href="#" id="logoUrl" class="navbar-brand"><span>u</span>Market</a>                       
+            </div>      
+  <div class="navbar-inner">
+   <div class="container">
+    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse" style="display:none;">          
+     <span class="icon-bar"></span>
+     <span class="icon-bar"></span>
+     <span class="icon-bar"></span>
+    </button>
+    
+    <div class="nav-collapse collapse">
+    <p class="navbar-text hidden-xs hidden-sm">The easiest way to shop</p>
+     <ul class="nav">
+      {{#each .}}
+       {{#if children}}
+        <li class="dropdown">
+         <a data-toggle="dropdown" class="dropdown-toggle " href="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}  <b class="caret"></b></a>
+         <ul class="dropdown-menu">
+          {{> subMenuItem}}
+         </ul>
+        </li>
+       {{else}}
+        {{#ifEquals mType 'Category'}}
+         <li><a class="category" href="javascript:void(0);" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+        {{/ifEquals}}
+        {{#ifEquals mType 'Product'}}
+         <li><a class="product" href="javascript:void(0);" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+        {{/ifEquals}}
+        {{#ifEquals mType 'URL'}}
+         <li><a class="menuTypeURL" href="javascript:void(0);" data-href="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+        {{/ifEquals}}
+        {{#ifEquals mType 'None'}}
+         <li><a href="javascript:void(0);" data-menuid="{{menuId}}">{{displayName}}</a></li>
+        {{/ifEquals}}
+       {{/if}}
+      {{/each}}
+      <li class="dropdown navbar-cart hidden-xs">
+                        <span class="cartsec"><a id="cartHeader" class="chead cartHeaderLink" href="#"></a></span>                        
+                    </li>
+                    <li class="dropdown navbar-search hidden-xs">                        
+                        <div class="search_form" />
+                    </li>
+     </ul>
+    </div>
+   </div>
+  </div>
+ </div>
+</script>
+<script>
+        jQuery(function($){
+            CCRZ.uiProperties.Menu.desktop.tmpl = 'XCmenu-desktop';            
+        });
+    </script>
+</apex:page>

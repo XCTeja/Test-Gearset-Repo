@@ -1,0 +1,170 @@
+<apex:page id="cc_hex_3D_DisplayForm" applyHtmlTag="false" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" controller="MyClass">
+<div class="abc"></div>
+<script id="MyAccount-MyWalletMCC-Both" type="text/template">
+    <div class="myWalletCCOuterContainer">
+        <h2 class="title">Please Provide Your Credit Card Information</h2>
+        <div class="main_content_large_right_container">
+        <!--<iframe width="600" height="800" src="https://www.pwsdemo.com/App/HostedCardVault/AddCard.aspx?submissionId={!submissionId}"></iframe>-->
+
+            <div class="alert alert-error error_messages_section" style="display:none;"></div>
+
+            <form id="newCCForm" action="xCAction" class="newCCForm" forceSSL="true">
+                <fieldset>
+                    <legend>New Credit Card</legend>
+                    <p>Enter your payment data below</p>
+                    <p>First Name:</p><p><input type="text" name="firstName" id="firstName" maxlength="50" /></p>
+                    <p>Last Name:</p><p><input type="text" name="lastName" id="lastName" maxlength="50" /></p>
+                    <p>Card Type:</p>
+                    <p>
+                        <select name="paymentType" value="">
+                            <option value="Visa">Visa</option>
+                            <option value="MC">Master Card</option>
+                            <option value="Amex">American Express</option>
+                            <option value="Disc">Discover Card</option>
+                        </select>
+                    </p>
+                    <p>Card Number:</p><p><input type="text" name="accountNumber" value="" ></p>
+                    <p>Card Code:</p><p><input type="text" name="cardCode" value="" ></p>
+                    <p>Expiration:</p><p>M:<select name="expirationMonth" >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10" selected>10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    &nbsp;Y:<select name="expirationYear">
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                    </select></p>
+                    
+                    
+                </fieldset>
+                <p class="two_buttons">
+                    <div class="right">
+                       <input type="button" class='button cancelCC' id="cancelCC" value="{{pageLabelMap 'MyWallet_Cancel'}}" />
+                        <input type="button" class='button saveCC' id="saveCC" value="{{pageLabelMap 'MyWallet_SaveToWall'}}" />
+                        
+                    </div>
+                </p>
+                <p>&nbsp;</p>
+                            </form>
+        </div>
+    </div>
+        
+</script>
+<script>
+    jQuery(function($) {
+        
+        CCRZ.views.StoredPaymentsCCView = CCRZ.CloudCrazeView.extend({
+            viewName : "StoredPaymentsCCView",
+            className:'MyClass',
+            templateDesktop : CCRZ.util.template("MyAccount-MyWalletMCC-Both"),
+            templatePhone : CCRZ.util.template("MyAccount-MyWalletMCC-Both"),
+            init : function(){
+                this.render();
+            },
+            events: {
+                "click .saveCC" : "makeCCPayment"
+            },
+            initValidation : function() {
+                $('#newCCForm').validate({
+                    invalidHandler : function(event, validator) {
+                        CCRZ.handleValidationErrors(event, validator, 'error_messages_section', false);
+                    },
+                    rules : {
+                        accountNumber : { required : true }
+                    },
+                    messages : {
+                        accountNumber : { required : 'CC Number is required' }
+                    },
+                    errorPlacement : function(error, element) { }
+                });
+            },
+            renderDesktop : function(){
+                $(CCRZ.uiProperties.StoredPaymentsPOView.phone.selector).empty();
+                //this.setElement($(CCRZ.uiProperties.StoredPaymentsPOView.desktop.selector));
+                this.setElement('.paymentTypeContainer');
+                this.$el.html(this.templateDesktop({}));
+            },
+            renderPhone : function(){
+                $(CCRZ.uiProperties.StoredPaymentsPOView.desktop.selector).empty();
+                this.setElement($(CCRZ.uiProperties.StoredPaymentsPOView.phone.selector));
+                this.$el.html(this.templatePhone({}));
+            },
+            postRender : function() {
+                //this.initValidation();
+            },
+            
+            makeCCPayment : function(event){
+                var formData = form2js("newCCForm", '.', false, function(node) {}, false);
+                formData.accountType = 'an';
+                //formData.accountNumber = formData.accountNumber.substring(formData.accountNumber.length - 4);
+                //CCRZ.pubSub.trigger('action:processPayment', formData);
+                var submissionId = getParameterByName('submissionId');
+                var cartId = getParameterByName('cartID');
+                var cardStored = getParameterByName('cardStored');
+                                             MyClass.remoteInitAuth(submissionId, cartId, cardStored, formData, function(result, evt) {
+                                                
+                                                    var paymentData = {
+                                                        //accountType: 'an', //Important field
+                                                        //token: result[3],
+                                                        //transactionCode: result[1],
+                                                        //accountNumber: result[0],
+                                                        //transactionSubcode: result[1],
+                                                        accountNumber:'41111111111111',
+                                                        accountType:'an',
+                                                        ammount:result[4],
+                                                        //comments:'abcd',
+                                                        //expirationMonth:result[12],
+                                                        //expirationYear:result[13],
+                                                        //paymentType:'credit',
+                                                        //requestAmount:'',
+                                                        //storedPaymentId:'',
+                                                        //storefront:'defaultStore',
+                                                        subAccountNumber:'abcdf',
+                                                        //token:'',
+                                                        transactionCode:result[1],
+                                                        transactionPaymentId:'123456789',
+                                                        transactionSubcode:'123456',
+                                                        //transactionType:'card',
+                                                        verificationCode:'12345',
+                                                        //saveAsStoredPayment:false,
+                                                        accountName:result[8]
+                                                        
+                                                    }
+                                                    //var paymentData1={PARAM_CART:result[4]}
+                                                    formData.accountNumber = formData.accountNumber.substring(formData.accountNumber.length - 4);
+                                                    CCRZ.pubSub.trigger('action:processPayment', formData);
+                                                    //window.parent.CCRZ.pubSub.trigger('action:createTransaction',result[4]);
+                                                
+                                            });
+                
+            }
+        });
+
+        CCRZ.paymentViews = CCRZ.paymentViews || {};
+        CCRZ.paymentViews.cc = new CCRZ.views.StoredPaymentsCCView({
+            //model : new CCRZ.models.StoredPaymentsCCModel
+        });
+        
+        
+        
+    });
+    function getParameterByName(name) {
+       var res = new RegExp('[\?&]' + name.replace(/\[/g, '\\\[').replace(/\]/g, '\\\]') + '(?:=([^&#]*))?(?:[&#]|$)').exec(window.location.search);
+       return res;
+}
+</script>
+{!dummy}
+</apex:page>

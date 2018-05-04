@@ -1,0 +1,71 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+    <script id="Example-Review-Desktop" type="text/template">
+        <div class="margin_form">
+            <div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dictum felis non ligula suscipit, vel dignissim arcu volutpat. 
+                Mauris sapien quam, sodales vel orci at, vestibulum ultrices nulla. Ut aliquam nisi quis enim ullamcorper ornare. 
+                Phasellus feugiat velit quis orci fringilla tincidunt. Duis eleifend ligula eget ullamcorper bibendum. Donec eget malesuada dolor. 
+                Donec sollicitudin vestibulum tortor, id placerat velit ultrices non. Aliquam quam leo, scelerisque sed elit eget, tempor convallis sapien. 
+                Quisque ultricies eros et placerat luctus. Donec efficitur augue nibh, quis vestibulum nisl sodales vel.           
+            </div>
+            <p class="link_button">
+                <button type="button" class="btn slim processBack" alt="{{pageLabelMap 'Back'}}">{{pageLabelMap 'Back'}}</button>
+                <input class="button right processReviewNew" type="button" value="{{pageLabelMap 'CheckOut_Continue'}}" alt="{{pageLabelMap 'CheckOut_Continue'}}" />
+                <br/>
+            </p>
+        </div>
+    </script>
+    <script>
+CCRZ.Checkout = _.extend(CCRZ.Checkout||{},{
+    SubscReviewNew :{
+        register : function(registrar){
+            registrar.registerViewNew('CheckOut_ReviewStepNew', new CCRZ.views.SubscOrderReviewViewNew(), 'images/order_review_header.png');
+        }
+    }
+});
+    jQuery(function($) {
+        CCRZ.pubSub.on('view:cartCheckoutView:awaitingSubViewInit',function(theView){
+            if(CCRZ.Checkout.userInfo){
+                CCRZ.Checkout.userInfo.register(theView);
+            }
+            if(CCRZ.Checkout.shipping){
+                CCRZ.Checkout.shipping.register(theView);
+            }
+            if(CCRZ.Checkout.SubscReviewNew){
+                CCRZ.Checkout.SubscReviewNew.register(theView);
+            }
+            if(CCRZ.Checkout.review){
+                CCRZ.Checkout.review.register(theView);
+            }
+            if(CCRZ.Checkout.payment){
+                CCRZ.Checkout.payment.register(theView);
+            }
+            CCRZ.pubSub.trigger('view:cartCheckoutView:subViewInit');          
+        });
+        CCRZ.views.SubscOrderReviewViewNew = CCRZ.CloudCrazeView.extend({
+            templatePhone : CCRZ.util.template('Example-Review-Desktop'),
+            templateDesktop : CCRZ.util.template('Example-Review-Desktop'),
+            viewName : "SubscOrderReviewViewNew",
+            managedSubView : true,
+            events : {
+                "click .processReviewNew" : "processReviewNew"
+            },
+            initSetup: function(callback) {
+                callback();
+            },
+            renderPhone : function() {
+                this.renderView(this.templatePhone);
+            },
+            renderDesktop : function() {
+                this.renderView(this.templateDesktop);
+            },
+            renderView: function(currTemplate) {
+                this.$el.html(currTemplate(this));
+            },
+            processReviewNew: function() {
+                CCRZ.cartCheckoutView.slideRight();
+            },
+        });
+    });
+    </script>
+</apex:page>

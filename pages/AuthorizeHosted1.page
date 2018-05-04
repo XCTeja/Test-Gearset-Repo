@@ -1,0 +1,89 @@
+<apex:page id="cc_hp_an_DisplayForm" applyHtmlTag="false" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" controller="AuthorizeHosted">
+     <script id="MyAccount-MyWalletMCC-Both" type="text/template">
+
+   
+    
+        
+        <FORM action="{!postUrl}" method="POST" name="AuthForm" id="AuthForm" >
+
+        <!--<apex:iframe src="https://test.authorize.net/gateway/transact.dll" scrolling="true" id="theIframe"/>-->
+        
+        <!--<iframe width="600" height="800" src="https://test.authorize.net/gateway/transact.dll"></apex:iframe >-->
+        <!--<% ret = InsertFP (APIloginid, sequence, amount, txnkey) %>-->
+        <!-------------------------Merchant Authentication---------------------->
+        <INPUT TYPE="HIDDEN" NAME="x_version" VALUE="3.1"/>
+        <INPUT TYPE="HIDDEN" NAME="x_login" VALUE="4pHq23dNxG"/>
+        <!-------------------------Fingerprint------------------------------->
+        <INPUT TYPE="HIDDEN" NAME="x_fp_hash" VALUE="rewrite"/>
+        <INPUT TYPE="HIDDEN" NAME="x_fp_sequence" VALUE="randomNum"/>
+        <INPUT TYPE="HIDDEN" NAME="x_fp_timestamp" VALUE="{!tmpStmp}"/>
+        <!-------------------------Transaction------------------------------->
+        <!--<INPUT TYPE="HIDDEN" NAME="x_invoice_num" VALUE="ORDER-002450"/>-->
+        <INPUT TYPE="HIDDEN" NAME="x_relay_response" VALUE="TRUE"/>
+        <!-------------------------Payment------------------------------->
+        <INPUT TYPE="HIDDEN" NAME="x_method" VALUE="CC"/>
+        <INPUT TYPE="HIDDEN" NAME="x_amount" VALUE="200"/>
+        <!-------------------------Payment Form Configuration------------------------------->
+        <INPUT TYPE="HIDDEN" NAME="x_show_form" VALUE="PAYMENT_FORM"/>
+        <input type="submit" value="submit"/>
+        </FORM>
+        <iframe name="myFrame"  src="https://test.authorize.net/gateway/transact.dll" width="800" height="1000"></iframe>
+                
+        
+
+    </script>
+    <script type="text/javascript" >
+    var loginVal='4pHq23dNxG';
+    var timeStamp=Math.round(new Date().getTime()/1000);
+    var vfrm = document.forms.AuthForm;
+    var crtId=parseParam('cartID');
+    var randomNum=Math.floor((Math.random() * 10000) + 1);
+    var str=loginVal+'^'+randomNum+'^'+timeStamp+'^'+'200.00'+'^';
+    vfrm.x_fp_sequence=randomNum;
+    vfrm.x_version='3.1';
+    vfrm.x_login=loginVal;
+    vfrm.x_fp_timestamp=timeStamp;
+    vfrm.x_relay_response='TRUE';
+    vfrm.x_method='CC';
+    vfrm.x_show_form='PAYMENT_FORM';
+    vfrm.x_amount="200.00";
+    vfrm.x_fp_hash=$.md5(str, '779X2cLc7M3f8uy8');
+    vfrm.onsubmit=function() {         
+         
+         
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.AuthorizeHosted.fPrint}',
+            crtId, randomNum, timeStamp,
+            function(result, event){
+                
+                   vfrm.x_fp_hash=result;
+               
+            }, 
+            {escape: true}
+        );
+        
+        return "https://test.authorize.net/gateway/transact.dll";
+     }
+    
+     
+     
+     
+     function parseParam(val) {
+        var result = "Not found",
+            tmp = [];
+        var items = location.search.substr(1).split("&");
+        for (var index = 0; index < items.length; index++) {
+            tmp = items[index].split("=");
+            if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
+        }
+        return result;
+    }
+    
+    
+    </script>
+    <script type="text/javascript" src="md5.js"></script>
+<script type="text/javascript">
+    hash = hex_md5("string");
+</script>
+{!dummy}
+</apex:page>

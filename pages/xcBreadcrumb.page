@@ -1,0 +1,131 @@
+<apex:page applyHtmlTag="false" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" cache="false">
+  <script id="breadCrumbBrowserxc" type="text/template">
+  
+      <!-- ==========================
+                BREADCRUMB - START 
+            =========================== -->
+        <section class="breadcrumb-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h2>Women</h2>
+                        <p>Fusce Aliquam</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <ol class="breadcrumb">
+                            <li><a href="{{this.home.attributes.href}}" title="{{this.home.attributes.title}}">{{this.home.attributes.label}}</a></li>
+                            {{#each this.categoryList.models}}
+                            &#47;&#160;
+                            <li><a href="{{this.attributes.href}}" class="categoryLink" title="{{this.attributes.title}}">{{this.attributes.label}}</a></li>
+                           {{/each}}
+                        
+                           {{#if this.displayCategoryBreadCrumb}}
+                            {{#if this.product.attributes.label}}
+                             &#47;&#160;                        
+                             <li><a href="{{this.product.attributes.href}}" title="{{this.product.attributes.title}}">{{this.product.attributes.label}}</a></li>
+                            {{/if}}
+                           {{/if}}
+                        
+                           {{#if this.displaySearchBreadCrumb}} 
+                            {{this.separator}}&#160;
+                            <li><a href="#">{{this.searchResultsLabel}}</a></li>
+                          
+                            {{this.separator}}&#160;
+                            {{this.product.attributes.label}}
+                           {{/if}}
+                        
+                           {{#if this.displaySearchBreadCrumbWithoutLink}}
+                            {{this.separator}}&#160;
+                            {{this.search.attributes.label}}
+                           {{/if}}                            
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ==========================
+            BREADCRUMB - END 
+        =========================== -->
+        <!--=============
+         <div class="breadcrumbs">
+  <div class="breadcrumbs_container">
+   <a href="{{this.home.attributes.href}}" title="{{this.home.attributes.title}}">{{this.home.attributes.label}}</a>
+
+   {{#each this.categoryList.models}}
+    {{../separator}}&#160;
+    <a href="{{this.attributes.href}}" class="categoryLink" title="{{this.attributes.title}}">{{this.attributes.label}}</a>
+   {{/each}}
+
+   {{#if this.displayCategoryBreadCrumb}}
+    {{#if this.product.attributes.label}}
+     {{this.separator}}&#160;
+
+     <a href="{{this.product.attributes.href}}" title="{{this.product.attributes.title}}">{{this.product.attributes.label}}</a>
+    {{/if}}
+   {{/if}}
+
+   {{#if this.displaySearchBreadCrumb}} 
+    {{this.separator}}&#160;
+    <a href="#">{{this.searchResultsLabel}}</a>
+  
+    {{this.separator}}&#160;
+    {{this.product.attributes.label}}
+   {{/if}}
+
+   {{#if this.displaySearchBreadCrumbWithoutLink}}
+    {{this.separator}}&#160;
+    {{this.search.attributes.label}}
+   {{/if}}
+  </div>
+ </div>
+ =================-->
+</script>
+
+<script>
+ jQuery(function($) {
+  CCRZ.models.bcItemModel = CCRZ.CloudCrazeModel.extend();
+  
+   CCRZ.views.breadcrumbView = CCRZ.CloudCrazeView.extend({
+   templatePhone : CCRZ.util.template(CCRZ.uiProperties.breadcrumbView.phone.tmpl),
+   templateDesktop : CCRZ.util.template(CCRZ.uiProperties.breadcrumbView.desktop.tmpl),
+   viewName : "breadcrumbView",
+   
+   init : function(){
+    this.model = new CCRZ.models.breadcrumbModel();    
+    this.dataInit();
+    CCRZ.pubSub.on('cartChange',this.dataInit, this);
+   },
+   renderDesktop : function(){
+    this.$el.html('');
+    this.$el = $(CCRZ.uiProperties.breadcrumbView.desktop.selector);
+    this.$el.html(this.templateDesktop(this.model.toJSON()));
+   },
+   renderPhone : function(){
+    this.$el.html('');
+    this.$el = $(CCRZ.uiProperties.breadcrumbView.phone.selector);
+    this.$el.html(this.templatePhone(this.model.toJSON()));
+   },
+   dataInit : function(){
+    this.model.set({
+    home : new CCRZ.models.bcItemModel({
+      href : "/DefaultStore/ccrz__HomePage?cartID="+CCRZ.pagevars.currentCartID+getCSRQueryString(),
+     title : "Go to Store Home Page",
+     //label: "Home"
+     label: CCRZ.pagevars.pageLabels["BreadCrumbInc_Home"]
+     })
+    });
+    var v = this;
+    categories.fetch(function(){
+     v.render();
+    });
+   }
+   });
+  
+  CCRZ.breadcrumbView = new CCRZ.views.breadcrumbView();
+  
+  CCRZ.dynamicViews.push(CCRZ.breadcrumbView);
+   
+  CCRZ.uiProperties.breadcrumbView.desktop.tmpl = 'breadCrumbBrowserxc'; 
+});
+</script>
+</apex:page>

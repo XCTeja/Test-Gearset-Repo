@@ -1,0 +1,34 @@
+<apex:page controller="AuthorizeHosted">
+    <script type= "text/javascript">
+    </script>
+    <apex:outputPanel >
+    
+        <!---
+        <form METHOD "POST" ACTION "https://test.authorize.net/gateway/transact.dll">
+        ---------------------FINGER PRINT-----------------------------
+        <INPUT TYPE=HIDDEN NAME=”x_fp_hash” VALUE=”value of the field”>
+        <INPUT TYPE=HIDDEN NAME=”x_fp_sequence” VALUE=”value of the field”>
+        <INPUT TYPE=HIDDEN NAME=”x_fp_timestamp” VALUE=”value of the field”>
+        </form>
+        ---->
+        <FORM METHOD="POST" ACTION= "https://test.authorize.net/gateway/transact.dll">
+        <!--<% ret = InsertFP (APIloginid, sequence, amount, txnkey) %>-->
+        <!-------------------------Merchant Authentication---------------------->
+        <INPUT TYPE="HIDDEN" NAME="x_version" VALUE="3.1"/>
+        <INPUT TYPE="HIDDEN" NAME="x_login" VALUE="4pHq23dNxG"/>
+        <!-------------------------Fingerprint------------------------------->
+        <INPUT TYPE="HIDDEN" NAME="x_fp_hash" VALUE="{!fingerprint}"/>
+        <INPUT TYPE="HIDDEN" NAME="x_fp_sequence" VALUE="99123"/>
+        <INPUT TYPE="HIDDEN" NAME="x_fp_timestamp" VALUE="{!tmpStamp}"/>
+        <!-------------------------Transaction------------------------------->
+        <INPUT TYPE="HIDDEN" NAME="x_invoice_num" VALUE="ORDER-002450"/>
+        <INPUT TYPE="HIDDEN" NAME="x_type" VALUE="AUTH_ONLY"/>
+        <!-------------------------Payment------------------------------->
+        <INPUT TYPE="HIDDEN" NAME="x_method" VALUE="CC"/>
+        <INPUT TYPE="HIDDEN" NAME="x_amount" VALUE="9.95"/>
+        <!-------------------------Payment Form Configuration------------------------------->
+        <INPUT TYPE="HIDDEN" NAME="x_show_form" VALUE="PAYMENT_FORM"/>
+        <INPUT TYPE="SUBMIT" VALUE="Click here for the secure payment form"/>
+        </FORM>
+    </apex:outputPanel>
+</apex:page>

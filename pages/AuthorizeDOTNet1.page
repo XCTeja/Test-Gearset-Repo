@@ -1,0 +1,46 @@
+<apex:page applyHtmlTag="false" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" cache="false">
+<script id="PaymentAN-Both" type="text/template">
+    <div class="poPaymentOuterContainer">
+        <h1>Xcentium***</h1>
+        <div class="main_content_large_right_container">
+            <div class="alert alert-error poPayment-messagingSection-Error" style="display: none"></div>
+            <form id="newWalletForm" action="" class="newPOForm" forceSSL="true">
+            <fieldset>
+                <legend>{{pageLabelMap 'PMTPO_NewPO'}}</legend>
+                <div class="payment_po_instructions">{{pageLabelMap 'PMTPO_Instr'}}</div>
+                <div class="payment_po_information">
+                    <div class="row accountNumber">
+                        <label><span class="poLabel Number fieldLabel">{{pageLabelMap 'PMTPO_PONum'}}</span>
+                            <input type="text" name="accountNumber" id="accountNumber" maxlength="50" />
+                        </label>
+                    </div>
+                    {{#if {!NOT(ISPICKVAL($User.UserType, 'Guest'))} }}
+                    {{#ifDisplay 'WLT.Enabled'}}
+                        <div class="row actionButtons">
+                            <label><span class="poLabel SavePayment fieldLabel">{{pageLabelMap 'MyWallet_SavePayment'}}</span>
+                                <input type="checkbox" name="saveAsStoredPayment" id="saveAsStoredPayment" value="true" />
+                            </label>
+                        </div>
+                        <div class="row displayName">
+                            <label><span class="poLabel Name fieldLabel">{{pageLabelMap 'MyWallet_NameOpt'}}</span>
+                                <input type="text" name="displayName" id="displayName" maxlength="50" />
+                            </label>
+                        </div>
+                    {{/ifDisplay}}
+                    {{/if}}
+                </div>
+            </fieldset>
+            <br/>
+            <p class="two_buttons">
+                <div class="right">
+                    <input type="button" class="button makePOPayment" id="save" data-id="newWalletForm" value="{{pageLabelMap 'Payment_MakePayment'}}" />
+                </div>
+            </p>
+            <br/>
+            </form>
+        </div>
+    </div>
+    <h1>Xcentium####</h1>
+</script>
+
+</apex:page>

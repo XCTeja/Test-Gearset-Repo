@@ -1,0 +1,59 @@
+<apex:page controller="XCPaymentProcessor">
+<script id="XCPaymentProcessor-Desktop" type="text/template">
+ <div class="paymentOuterContainer">
+ <div class="alert alert-error storedpayment-messagingSection-Error" style="display: none"></div>
+ <div class="alert alert-info storedpayment-messagingSection-Info" style="display: none"></div>
+ <div class="alert alert-warning storedpayment-messagingSection-Warning" style="display: none"></div>
+<h1>Sandeep*****</h1>
+ {{#ifDisplay 'WLT.Enabled'}}
+  {{#if this.storedPayments}}
+   <fieldset class="payment">
+    <legend>{{pageLabelMap 'PaymentProcessor_MyWallet'}}</legend>
+    <div class="storedPaymentsContainer">
+     <div class="storedPaymentsTopSection">{{pageLabelMap 'PaymentProcessor_Top'}}</div>
+     {{#each this.storedPayments}}
+      <div class="storedPaymentContainer {{this.accountType}}">
+       <span class="storedPaymentSelector {{this.sfid}}"><input type="radio" name="storedPaymentSelection" value="{{this.sfid}}" class="storedPaymentSelection {{this.sfid}}" data-id="{{this.sfid}}" {{#ifEquals @root.storedSelected this.sfid}}checked{{/ifEquals}}/></span>
+       <span class="storedPaymentDisplay">
+        {{pageLabelMapMultiString 'PaymentDisplay_' this.accountType this.accountType this.accountNumber this.subAccountNumber (pageLabelMapMultiString 'PaymentType_' this.paymentType) (pageLabelMapMultiString 'PaymentExpMonth_' this.expirationMonth) (pageLabelMap this.expirationYear) this.displayName}}
+       </span>
+      </div>
+     {{/each}}
+     <div class="actionContainer">
+      <button type="button" class="btn btn-primary wide useStoredPayment">{{pageLabelMap 'PaymentProcessor_UseStoredPayment'}}</button>
+      <h1>Sandeep*****</h1>
+     </div>
+    </div>
+   </fieldset>
+  {{/if}}
+ {{/ifDisplay}}
+
+ <div class="paymentMidSection">{{pageLabelMap 'PaymentProcessor_MidSec'}}</div>
+
+ {{#if this.paymentTypes}}
+  <div class="paymentTypesContainer">
+   <ul class="nav nav-tabs" role="tablist">
+    {{#each this.paymentTypes}}
+     <li role="presentation" {{#ifEquals @index 0 }} class="active" {{/ifEquals}}><a href="#{{@key}}" aria-controls="{{@key}}" role="tab" data-toggle="tab">{{pageLabelMapMultiString 'PaymentProcessorTab_' @key}}</a></li>
+    {{/each}}
+   </ul>
+   <!--***********-->
+   <div class="tab-content">
+    {{#each this.paymentTypes}}
+     <div role="tabpanel" class="tab-pane {{#ifEquals @index 0 }} active {{/ifEquals}} " id="{{@key}}">
+      <div class="paymentTypeContainer {{@key}} err">
+       {{pageLabelMap 'Payment_LoadingPaymentType'}}
+      </div>
+     </div>
+    {{/each}} 
+   </div>
+  </div>
+ {{/if}}
+</script>
+
+<script>
+        jQuery(function($){
+            CCRZ.uiProperties.PaymentView.desktop.tmpl = 'XCPaymentProcessor-Desktop';            
+    });
+</script>
+</apex:page>

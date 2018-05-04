@@ -1,0 +1,31 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false">
+<div class="container hidden-phone deskLayout">
+    <header>
+        <div class="row-fluid headerRow">
+            <div class="span12 header">
+                <apex:insert name="header" />
+            </div>
+        </div>
+        <div class="menu_container">
+            <apex:insert name="menu" />
+        </div>
+    </header>
+     
+    <div class="container-fluid contentBody">
+        <apex:insert name="htmlbody" />
+    </div>
+    <div class="home_slider">
+        <apex:insert name="splash" />
+        <div id="breadcrumb_desktop_container">
+            <apex:insert name="breadcrumb" />
+        </div>
+    </div>
+    <footer>
+        <div class="row-fluid clear footerRow">
+            <div class="span12 footerBrowser">
+                <!--<apex:include pageName="{!storefrontFooter}"/>-->
+            </div>
+        </div>
+    </footer>
+</div>
+</apex:page>

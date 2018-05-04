@@ -1,0 +1,136 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+    
+
+<section class="card bg-blue text-center">
+  
+  <div class="callout">
+    <h1>Our Mission</h1>
+    <p>To provide the electrical distribution, specialty lighting, and OEM industries with a comprehensive range of traditional lamps, LEDs, and ballasts, along with the very best possible service and attention to detail.</p>
+  </div>
+
+</section>
+
+
+<section class="card text-center">
+  
+  <h2>What we offer</h2>
+
+  <div class="row">
+
+    <div class="col-md-3">
+      <div class="thumbnail">
+        <div class="img">
+          <img src="//placehold.it/100x100" alt="" />
+        </div>
+        <div class="caption">
+          <h3>Knowledge</h3>
+          <p>Our team of on-demand lighting specialists ensures you find the product you're looking for.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="thumbnail">
+        <div class="img">
+          <img src="//placehold.it/100x100" alt="" />
+        </div>
+        <div class="caption">
+          <h3>Knowledge</h3>
+          <p>Our team of on-demand lighting specialists ensures you find the product you're looking for.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="thumbnail">
+        <div class="img">
+          <img src="//placehold.it/100x100" alt="" />
+        </div>
+        <div class="caption">
+          <h3>Knowledge</h3>
+          <p>Our team of on-demand lighting specialists ensures you find the product you're looking for.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="thumbnail">
+        <div class="img">
+          <img src="//placehold.it/100x100" alt="" />
+        </div>
+        <div class="caption">
+          <h3>Knowledge</h3>
+          <p>Our team of on-demand lighting specialists ensures you find the product you're looking for.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="card">
+  
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="thumbnail with-bg-image">
+        <div class="img">
+          <img src="//placehold.it/600x400" alt="" />
+        </div>
+        <div class="caption">
+          <h3>Personal Assistants</h3>
+          <p>Only a phone call or email away, our lighting specialists are your personal assistants. We're here to help you secure the order and get the product delivered. Please let us know if you would like a direct specialist assigned to you today.</p>
+          <div class="btn-container">
+            <a href="#" class="btn btn-arrow">Learn More <i class="icon-circle-arrow"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="thumbnail with-bg-image">
+        <div class="img">
+          <img src="//placehold.it/600x400" alt="" />
+        </div>
+        <div class="caption">
+          <h3>Personal Assistants</h3>
+          <p>Only a phone call or email away, our lighting specialists are your personal assistants. We're here to help you secure the order and get the product delivered. Please let us know if you would like a direct specialist assigned to you today.</p>
+          <div class="btn-container">
+            <a href="#" class="btn btn-arrow">Learn More <i class="icon-circle-arrow"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="card text-center">
+  
+  <div class="quote">
+    <blockquote class="quote-copy">
+      <p>Having used Candela for the past seven years, I have nothing but praise for the level of their service. From the 'odd and unusual' items that kill your productivity, to the large opportunities which require special pricing, all inquiries are handled quickly and accurately by a staff that treats every call with reall professionalism.</p>
+    </blockquote>
+    <p class="quote-citation">JC. M. Kittredge, WESCO Utility, Denver, CO</p>
+  </div>
+
+</section>
+
+
+<section class="card text-center">
+  
+  <h3>Wholesale prices from over 150 vendors including...</h3>
+
+  <ul class="list-inline logos">
+    <li class="logo"><img src="//placehold.it/200x75" alt="" /></li>
+    <li class="logo"><img src="//placehold.it/200x75" alt="" /></li>
+    <li class="logo"><img src="//placehold.it/200x75" alt="" /></li>
+  </ul>
+</section>
+    
+
+    
+</apex:page>

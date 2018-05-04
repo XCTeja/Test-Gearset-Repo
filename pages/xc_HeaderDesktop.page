@@ -1,0 +1,46 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+    
+	<script id="xc_HeaderDesktop" type="text/template">
+<div class="top_navigation">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="contact-info">
+        <span>1-800-922-9226</span>
+        <span>Contact Us</span>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="misc-function"></div>
+    </div>
+    <div class="col-md-5">
+      <div class="account-cart">
+        <span class="acctsec"><a class="acct" id="goToAccount" href="#" >{{pageLabelMap 'Component_SiteHeader_MyAccount'}}</a></span>
+        <span class="cartsec"><a id="cartHeader" class="chead cartHeaderLink" href="#"></a></span>
+        <span class="loginoutsec"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="logo_tagline hidden-phone">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="logo"><a href="/" id="logoUrl"><img src="{{this.logoUrl}}"/></a></div>
+    </div>
+    <div class="col-md-6">
+      <div class="search_form"></div>
+    </div>
+    <div class="col-md-3">
+      <div class="header-promos"></div>
+    </div>
+  </div>
+</div>
+    </script>
+    
+    <script>
+        jQuery(function($){
+            CCRZ.uiProperties.headerView.desktop.tmpl = 'xc_HeaderDesktop';
+        });
+    </script>
+    
+</apex:page>

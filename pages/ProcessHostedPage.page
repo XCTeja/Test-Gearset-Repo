@@ -1,0 +1,72 @@
+<apex:page id="cc_hex_3D_ProcessCreditCard" controller="cc_hex_3DController_ProcessCard" applyHtmlTag="false" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false">
+ 
+ <script> 
+     var previousOnload = window.onload; 
+     window.onload = function() { 
+         if (previousOnload) { 
+             previousOnload(); 
+         }
+         
+         tokenizeAndAuthorize();
+         
+         //initAuth(getParameterByName('submissionId'),getParameterByName('cardStored'),getParameterByName('cartID', window.parent.location.href));
+         //window.parent.CCRZ.pubSub.trigger('action:processPayment',paymentData);
+     } 
+     
+     function tokenizeAndAuthorize() {
+        var submissionId = 'abcd';//getParameterByName('submissionId');
+        var cartId = '1234';//getParameterByName('cartID', window.parent.location.href);
+        var cardStored = '123456';//getParameterByName('cardStored');
+        
+        cc_hex_3DController_ProcessCard.remoteInitAuth(submissionId, cartId, cardStored, function(result, event) {
+            if (true) {
+                var paymentData = {
+                    accountType: 'hp', //Important field
+                    token: '12345',
+                    transactionCode: '123456',
+                    
+                    transactionSubcode: '1234567'
+                }
+                window.top.CCRZ.pubSub.trigger('action:processPayment',paymentData);
+            }
+        });
+    }
+    function initAuth(submissionId, cardStored, cartId) {
+        alert("final steps params - subId=" + submissionId + " cardStored=" + cardStored + " cartId=" + cartId);
+        paraFunction(submissionId, cardStored, cartId);
+    }
+    function getParameterByName(name, url) {
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
+        results = regex.exec(url);
+        if (!results) {
+            return null;
+        }
+        if (!results[2]) {
+            return '';
+       }
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+ </script>
+ 
+    <div id="walletContainer" class="myWalletCCOuterContainer">
+        <div class="main_content_large_right_container">
+            <h2 class="title">Completing payment, one moment...</h2>
+                
+            <apex:form > 
+            <apex:actionFunction name="paraFunction" action="{!initAuth}" rerender="walletContainer">     
+                <apex:param id="p_submissionId" name="submissionId" value="" />
+                <apex:param id="p_storeStatus" name="cardStored" value="" />
+                <apex:param id="p_cartId" name="cartId" value="" />
+            </apex:actionFunction>
+            </apex:form>
+                
+            <script type="text/javascript">
+            </script>
+        </div>
+    </div>
+
+</apex:page>

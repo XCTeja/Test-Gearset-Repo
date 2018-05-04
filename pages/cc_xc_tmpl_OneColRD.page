@@ -1,0 +1,25 @@
+<apex:page id="cc_xc_tmpl_OneColRD" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false">
+		
+    <h1>
+        HELLO!
+    </h1>
+    <div class="effright"></div>
+    <div class="search-box-RightNav" />
+    <div id="MyAccount_navSection"></div> <!-- placeholder for MyAccount Nav in right nav -->
+    <apex:insert name="ContactUs" />
+    <apex:insert name="MiniCartBox" />
+    <apex:insert name="SellerLocatorBox"/>
+    <apex:insert name="MiniQuickOrderBox" />
+    <div id="categories-right-nav"></div> <!-- placeholder for category tree in right nav -->
+    <div class="widgetSection"></div>
+    <div class="promotion-box-RightNav"></div>
+    <apex:insert name="SideNavigation" />
+    <apex:insert name="SocialFacebookBox" />
+    <apex:insert name="Banner" />
+    <div class="promotion-box-Banner"></div>
+    <div class="effwig"></div>
+    <apex:insert name="ProductSearch" />
+    <apex:insert name="body" />
+    <apex:insert name="CrossSell" />
+	
+</apex:page>

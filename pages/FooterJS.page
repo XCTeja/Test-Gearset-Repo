@@ -1,0 +1,10 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false">
+
+    <script src="{!$Resource.XCDemo_Theme}/js/bootstrap-hover-dropdown.min.js"></script>
+    <script src="{!$Resource.XCDemo_Theme}/js/SmoothScroll.js"></script>
+    <script src="{!$Resource.XCDemo_Theme}/js/owl.carousel.min.js"></script>
+    <script src="{!$Resource.XCDemo_Theme}/js/twitterFetcher_min.js"></script>
+    <script src="{!$Resource.XCDemo_Theme}/js/color-switcher.js"></script>
+    <script src="{!$Resource.XCDemo_Theme}/js/custom.js"></script>
+    
+</apex:page>

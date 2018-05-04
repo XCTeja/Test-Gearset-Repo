@@ -1,0 +1,122 @@
+<apex:page id="cc_hex_3D_DisplayForm" controller="cc_hex_3DController" applyHtmlTag="false" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false">
+
+
+<script id="MyAccount-MyWalletMCC-Both" type="text/template">
+    <div class="myWalletCCOuterContainer">
+        <h2 class="title">Please Provide Your Credit Card Information</h2>
+        <div class="main_content_large_right_container">
+        <iframe width="600" height="800" src="https://www.pwsdemo.com/App/HostedCardVault/AddCard.aspx?submissionId={!submissionId}"></iframe>
+
+            <div class="alert alert-error error_messages_section" style="display:none;"></div>
+
+            <form id="newCCForm" action="" class="newCCForm" forceSSL="true">
+                <fieldset>
+                <!--<p>Enabled for Checkout:</p><p><input type="checkbox" name="isEnabled" id="isEnabled" /></p>-->
+                </fieldset>
+                <p class="two_buttons">
+                    <div class="right">
+                        <input type="button" class="button makeCCPayment" id="btnMakeCCPayment" data-id="newCCForm" value="{{pageLabelMap 'Payment_MakePayment'}}" />
+                        <input type="hidden" name="accountType" value="cc"/>
+                        <input type="hidden" name="accountNumber" value="900120023003"/>
+                        <input type="hidden" name="token" value="1234-1234"/>
+                        <input type="hidden" name="transactionCode" value="1234"/>
+                        <input type="hidden" name="transactionSubcode" value="Auth Successful">
+                    </div>
+                </p>
+                <p>&nbsp;</p>
+            </form>
+            <input type="text" id="myAnchor" >
+        </div>
+    </div>
+
+        function processCreditCard(cardStored, submissionId){
+            alert("page params - subId=" + submissionId + " cardStored=" + cardStored + " cartId=" + getParameterByName('cartID'));
+            //paraFunction(submissionId, cardStored, getParameterByName('cartID'));
+         }
+        function getParameterByName(name, url) {
+            if (!url) {
+                url = window.location.href;
+            }
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
+            results = regex.exec(url);
+            if (!results) {
+                return null;
+            }
+            if (!results[2]) {
+                return '';
+           }
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        
+</script>
+<script>
+    jQuery(function($) {
+        // CCRZ.models.StoredPaymentsCCModel = CCRZ.CloudCrazeModel.extend({
+        //     className : "ccrzhello2.cc_hello_ctrl_pmt_MCC_New",
+        //     saveCCNumber: function(ccData, callback) {
+        //         this.invokeContainerLoadingCtx($('body'), "saveCCNumber", JSON.stringify(ccData),
+        //             function(response){
+        //                 if(response && response.success ) {
+        //                     callback();
+        //                 }
+        //             },
+        //             {nmsp: false}
+        //         );
+        //     },
+        // });
+
+        CCRZ.views.StoredPaymentsCCView = CCRZ.CloudCrazeView.extend({
+            viewName : "StoredPaymentsCCView",
+            templateDesktop : CCRZ.util.template("MyAccount-MyWalletMCC-Both"),
+            templatePhone : CCRZ.util.template("MyAccount-MyWalletMCC-Both"),
+            init : function(){
+                this.render();
+            },
+            events: {
+                "click .makeCCPayment" : "makeCCPayment"
+            },
+            initValidation : function() {
+                $('#newCCForm').validate({
+                    invalidHandler : function(event, validator) {
+                        CCRZ.handleValidationErrors(event, validator, 'error_messages_section', false);
+                    },
+                    rules : {
+                        accountNumber : { required : true }
+                    },
+                    messages : {
+                        accountNumber : { required : 'CC Number is required' }
+                    },
+                    errorPlacement : function(error, element) { }
+                });
+            },
+            renderDesktop : function(){
+                $(CCRZ.uiProperties.StoredPaymentsPOView.phone.selector).empty();
+                //this.setElement($(CCRZ.uiProperties.StoredPaymentsPOView.desktop.selector));
+                this.setElement('#3d');
+                this.$el.html(this.templateDesktop({}));
+            },
+            renderPhone : function(){
+                $(CCRZ.uiProperties.StoredPaymentsPOView.desktop.selector).empty();
+                this.setElement($(CCRZ.uiProperties.StoredPaymentsPOView.phone.selector));
+                this.$el.html(this.templatePhone({}));
+            },
+            postRender : function() {
+                this.initValidation();
+            },
+            makeCCPayment : function(event){
+                var formData = form2js("newCCForm", '.', false, function(node) {}, false);
+                formData.accountType = '3D';
+                formData.accountNumber = formData.accountNumber.substring(formData.accountNumber.length - 4);
+                CCRZ.pubSub.trigger('action:processPayment', formData);
+                
+            }
+        });
+
+        CCRZ.paymentViews = CCRZ.paymentViews || {};
+        CCRZ.paymentViews.cc = new CCRZ.views.StoredPaymentsCCView({
+            //model : new CCRZ.models.StoredPaymentsCCModel
+        });
+    });
+</script>
+</apex:page>

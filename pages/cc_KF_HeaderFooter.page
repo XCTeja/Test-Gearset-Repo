@@ -1,0 +1,325 @@
+<apex:page docType="html-5.0" sidebar="false" cache="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+    
+<script id="kf_HeaderDesktop" type="text/template">
+
+  <nav id="navigation" class="navigation">
+    <div class="navigation-header">
+      <button type="button" class="btn-link btn-close" id="closeNavButton">×</button>
+    </div>
+    <div class="inner">
+      <div class="inner-wrap">
+        <ul class="main-nav">
+          <li class="level0 nav-1 level-top parent">
+            <a class="menu-open">Institute</a>
+          </li>
+          <li class="level0 nav-2 level-top parent">
+            <a class="menu-open">Institute</a>
+          </li>
+          <li class="level0 nav-2 level-top about-us-menu">
+            <a class="menu-open hide">Institute</a>
+            <div class="level0">
+              <div class="sub-sections">
+                <h4 class="link">
+                  <a href="#">About Us</a>
+                </h4>
+              </div>
+              <div class="sub-sections">
+                <h4 class="link">
+                  <a href="#" id="goToAccount">{{pageLabelMap 'Component_SiteHeader_MyAccount'}}</a>
+                </h4>
+              </div>
+              <div class="sub-sections">
+                <h4 class="link loginoutsec cc_loginoutsec"></h4>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="menu-bottom">
+          <div class="menu-lang cf">
+            <div class="language-selector hide">
+              <div class="current store-default"><span>English</span></div>
+                <ul class="menu-lang-list" style="display:none">
+                  <li class="store-default"><a href="http://www.kornferry.com?___store=default"><span>English</span></a></li>
+                  <li class="store-chinese"><a href="http://www.kornferry.cn"><span>Chinese</span></a></li>
+                  <li class="store-japanese"><a href="http://www.kornferry.jp"><span>Japanese</span></a></li>
+                  <li class="store-korean"><a href="http://www.kornferry.kr"><span>Korean</span></a></li>
+                  <li class="store-french"><a href="http://www.kornferry.fr"><span>French</span></a></li>
+                  <li class="store-spanish"><a href="http://www.kornferry.com/?___store=spanish"><span>Spanish</span></a></li>
+                  <li class="store-german"><a href="http://www.kornferry.com.de"><span>German</span></a></li>
+                  <li class="store-portuguese"><a href="http://www.kornferry.pt"><span>Portuguese</span></a></li>
+                </ul>
+              </div>
+              <ul class="social-media">
+                <li><a href="https://www.facebook.com/KornFerry" target="_blank" class="icon-soc-fb icon-soc-fb-dims">FB</a></li>
+                <li><a href="https://twitter.com/Korn_Ferry" target="_blank" class="icon-soc-tw icon-soc-tw-dims">Twit</a></li>
+                <li><a href="http://www.linkedin.com/company/kornferry-international" target="_blank" class="icon-soc-li icon-soc-li-dims">Linked</a></li>
+                <li><a href="http://www.youtube.com/user/kornferryintl" target="_blank" class="icon-soc-yt icon-soc-yt-dims">Youtube</a></li>
+              </ul>
+            </div>
+            <div class="copyright cf">
+              <p class="copy">&copy; 2018 Korn Ferry. All Rights Reserved.</p>
+            </div>
+          </div>
+      </div>
+    </div>
+  </nav>
+  <div class="header-new">
+    <div class="header-inner">
+      <button type="button" id="navToggle" class="nav-toggle">
+          <span class="hamburger"><span></span></span>
+      </button>
+      <a href="https://www.kornferry.com/" class="logo"><img src="https://www.kornferry.com/skin/frontend/enterprise/kornferry/images/logo-new.svg"></a>
+      <div class="search-new search_form cc_search_form" />
+      <a href="#" id="cartHeader" class="chead cartHeaderLink"></a>
+    </div>
+  </div>
+
+
+  <div class="navbar-inverse cc_navbar-inverse">
+   <div class="container cc_container">
+    <div class="row cc_navbar_row">
+     <small>
+      <div class="col-md-4 col-xs-12 cc_navbar_col_misc">
+       <p class="header-spacer visible-md-* cc_header_spacer"></p>
+       <div class="navbar-header pull-left cc_navbar-header">
+        <span class="misc-function cc_misc_function" />
+        <span class="lssec cc_lssec"></span>
+       </div>
+      </div>
+      <div class="col-md-5 col-xs-12 cc_navbar_col_acct">
+       <p class="header-spacer visible-md-* cc_header_spacer"></p>
+       <div class="navbar-header pull-right cc_navbar-header">
+        <a href="#" id="cartHeader" class="chead cartHeaderLink"></a>
+       </div>
+      </div>
+      <div class="col-md-3 col-xs-12 pull-right cc_col_search">
+       <ul class="nav cc_nav">
+        <li></li>
+       </ul>
+      </div>
+     </small>
+    </div>
+   </div>
+  </div>
+  
+</script>
+<script>
+jQuery(function($){
+ CCRZ.uiProperties.headerView.phone.tmpl = 'kf_HeaderDesktop';
+ CCRZ.uiProperties.headerView.desktop.tmpl = 'kf_HeaderDesktop';
+
+ CCRZ.pubSub.on('view:headerView:refresh', function(theView) {
+  $('#navToggle').on('click',function(e){
+    e.preventDefault();
+    $('body').toggleClass('nav-exposed');
+  });
+
+  $('#closeNavButton').on('click',function(e){
+    e.preventDefault();
+    $('body').removeClass('nav-exposed');
+  });
+ });
+});
+</script>
+
+
+<script id="kf_productSearchTemplate" type="text/template">
+   {{#ifDisplay 'H.DisplSearch'}}
+    <div class="search-wrap" role="search">
+     <div class="form">
+      <input id="searchText" type="text" class="form-control search_input cc_search_input" placeholder="{{pageLabelMap 'ProductSearch'}}" title="{{pageLabelMap 'ProductSearch_Tooltip'}}" data-trigger="focus" autocomplete="off">
+      
+      <button id="doSearch" class="btn btn-default search_button search-btn" type="Submit"><img src="https://www.kornferry.com/skin/frontend/enterprise/kornferry/images/search-icon.svg" onerror="this.src='https://www.kornferry.com/skin/frontend/enterprise/kornferry/images/search-icon.png'; this.onerror=null;"></button>
+      
+     </div>
+    </div>
+
+    <span id="cc_search_error" data-trigger="manual" data-placement="bottom" data-content="{{pageLabelMap 'ProductSearch_Tooltip'}}"></span>
+
+    <div class="searchTopBarErrorMessage searchBoxWidgetError" ></div>
+
+   {{/ifDisplay}}
+</script>
+<script>
+jQuery(function($){
+  CCRZ.uiProperties.productSearchView.phone.tmpl = 'kf_productSearchTemplate';
+  CCRZ.uiProperties.productSearchView.desktop.tmpl = 'kf_productSearchTemplate';
+});
+</script>
+
+    
+<script id="kf_CartHeaderBrowser" type="text/template">
+ <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+ <span class="hide">{{pageLabelMap 'Component_SiteHeader_MyCart'}}: {{this.cartCount}} {{pageLabelMap 'Component_MiniCart_Item'}},&#160;{{price this.cartTotal}}</span>
+</script>
+<script>
+jQuery(function($){
+ CCRZ.uiProperties.cartHeaderView .phone.tmpl = 'kf_CartHeaderBrowser';
+ CCRZ.uiProperties.cartHeaderView .desktop.tmpl = 'kf_CartHeaderBrowser';
+});
+</script>
+
+
+<script id="submenu-desktop-template" type="text/template">
+  {{#each children}}
+   {{#if children}}
+    <li class="menu-item dropdown dropdown-submenu">
+     {{#ifEquals mType 'Category'}}
+      <a class="category dropdown-toggle" data-toggle="dropdown" href="#" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}} <i class="fa fa-caret-down hidden-md hidden-lg" aria-hidden="true"></i></a>
+     {{/ifEquals}}
+     {{#ifEquals mType 'Product'}}
+      <a class="product dropdown-toggle" data-toggle="dropdown" href="#" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}} <i class="fa fa-caret-down hidden-md hidden-lg" aria-hidden="true"></i></a>
+     {{/ifEquals}}
+     {{#ifEquals mType 'URL'}}
+      <a class="menuTypeURL dropdown-toggle" data-toggle="dropdown" href="#" data-href="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}} <i class="fa fa-caret-down hidden-md hidden-lg" aria-hidden="true"></i></a>
+     {{/ifEquals}}
+     {{#ifEquals mType 'None'}}
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#" data-menuid="{{menuId}}">{{displayName}} <i class="fa fa-caret-down hidden-md hidden-lg" aria-hidden="true"></i></a>
+     {{/ifEquals}}
+     <ul class="dropdown-menu">
+      {{> subMenuItem}}
+     </ul>
+    </li>
+   {{else}}
+    {{#ifEquals mType 'Category'}}
+     <li><a class="category" href="javascript:void(0);" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+    {{/ifEquals}}
+    {{#ifEquals mType 'Product'}}
+     <li><a class="product" href="javascript:void(0);" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+    {{/ifEquals}}
+    {{#ifEquals mType 'URL'}}
+     <li><a class="menuTypeURL" href="javascript:void(0);" data-href="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+    {{/ifEquals}}
+    {{#ifEquals mType 'None'}}
+     <li><a href="javascript:void(0);" data-menuid="{{menuId}}">{{displayName}}</a></li>
+    {{/ifEquals}}
+   {{/if}}
+  {{/each}}
+ </script>
+
+  <script id="kf_Menu" type="text/template">
+   <div id="secnav cc_secnav">
+   <nav class="navbar navbar-default navbar-static-top cc_navbar">
+    <div class="container cc_container">
+     <div class="navbar-header cc_navbar_header">
+      <button type="button" class="navbar-toggle collapsed cc_navbar_toggle" data-toggle="collapse" data-target="#navbar"
+       aria-expanded="false" aria-controls="navbar">
+       <span class="sr-only">Toggle navigation</span>
+        <!--***********-->
+        <span class="icon-bar cc_icon-bar"></span>
+        <span class="icon-bar cc_icon-bar"></span>
+        <span class="icon-bar cc_icon-bar"></span>
+      </button>
+     </div>
+     <div id="navbar" class="navbar-collapse collapse cc_navbar_collapse">
+      <ul class="nav navbar-nav cc_navbar-nav">
+       <li><a href="#" id="phoneLogo" class="cc_phone_logo"><span class="sr-only">Home</span><i class="fa fa-home" aria-hidden="true"></i></a></li>
+       {{#each .}}
+        {{#if children}}
+         <li class="dropdown cc_dropdown">
+          <a href="{{linkURL}}" class="dropdown-toggle cc_dropdown_toggle" data-toggle="dropdown" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}} role="button" aria-haspopup="true" aria-expanded="false">{{displayName}}<span class="caret"></span></a>
+          <ul class="dropdown-menu cc_dropdown-menu">
+           {{> subMenuItem}}
+          </ul>
+         </li>
+        {{else}}
+         {{#ifEquals mType 'Category'}}
+          <li class="dropdown cc_dropdown"><a class="category cc_category" href="javascript:void(0);" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+         {{/ifEquals}}
+         {{#ifEquals mType 'Product'}}
+          <li class="dropdown cc_dropdown"><a class="product cc_product" href="javascript:void(0);" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+         {{/ifEquals}}
+         {{#ifEquals mType 'URL'}}
+          <li class="dropdown cc_dropdown"><a class="menuTypeURL cc_menu_type_url" href="javascript:void(0);" data-href="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+         {{/ifEquals}}
+         {{#ifEquals mType 'None'}}
+          <li class="dropdown cc_dropdown"><a href="javascript:void(0);" class="cc_display_name" data-menuid="{{menuId}}">{{displayName}}</a></li>
+         {{/ifEquals}}
+        {{/if}}
+       {{/each}}
+      </ul>
+     </div><!--***************-->
+    </div>
+   </nav>
+  </div>
+</script>
+<script>
+jQuery(function($){
+  CCRZ.uiProperties.Menu.phone.tmpl = 'kf_Menu';
+  CCRZ.uiProperties.Menu.desktop.tmpl = 'kf_Menu';
+});
+</script>
+
+
+
+    
+<script id="MyAccount-Desktop" type="text/template">
+  {{#if this}}
+   {{#ifEquals this.UserType 'Guest'}}
+    <a href="#login" class="goToLogin cc_goto_login"><i class="fa fa-pencil" aria-hidden="true"></i>&#160;{{pageLabelMap 'Component_SiteHeader_Login'}}</a>
+   {{else}}
+    <a href="#logout" class="doLogout cc_do_logout"><i class="fa fa-pencil" aria-hidden="true"></i>&#160;{{pageLabelMap 'Component_SiteHeader_Logout'}} {{{this.FirstName}}} {{{this.LastName}}}</a>
+   {{/ifEquals}}
+  {{else}}
+   <a href="#login" class="cc_login"><i class="fa fa-pencil" aria-hidden="true"></i>&#160;{{pageLabelMap 'Component_SiteHeader_Login'}}</a>
+  {{/if}}
+</script>
+    
+    
+<script id="foot_desktop" type="text/template">
+    <div class="footer-container">
+        <div class="copyright">
+            <p class="copy">&copy 2018 Korn Ferry. All Rights Reserved.
+              <span>
+                {{#each this}}
+                  <a href="{{this.href}}" class="navbar-link cc_footer_link" target="{{this.target}}">{{pageLabelMap this.label}}</a>
+                {{/each}}
+              </span>
+            </p>
+        </div>
+        <ul class="social-media hide">
+            <li><a href="https://itunes.apple.com/us/podcast/korn-ferry-institute/id1244244730?mt=2" target="_blank" class="icon-soc-itunes icon-soc-itunes-dims">iTunes</a></li>
+            <li><a href="https://www.facebook.com/KornFerry" target="_blank" class="icon-soc-fb icon-soc-fb-dims">FB</a></li>
+            <li><a href="https://twitter.com/Korn_Ferry" target="_blank" class="icon-soc-tw icon-soc-tw-dims">Twit</a></li>
+            <li><a href="http://www.linkedin.com/company/kornferry-international" target="_blank" class="icon-soc-li icon-soc-li-dims">Linked</a></li>
+            <li><a href="http://www.youtube.com/user/kornferryintl" target="_blank" class="icon-soc-yt icon-soc-yt-dims">Youtube</a></li>
+        </ul>
+    </div>
+</script>
+
+
+<script id="kf_Promo" type="text/template">
+   {{#if this}}
+    <div class="panel panel-default cc_panel cc_promo promos">
+     <div class="panel-body cc_body">
+     {{#each this}}
+      {{#if sku}}
+       <a data-id="{{sku}}" href="javascript:productDetails('{{sku}}');" class="cc_promo_link"><img data-id="{{sku}}" class="img-responsive img-rounded cc_promo_img" src="{{fullImageURL}}" alt="{{altMsg}}" /></a>
+      {{else}}{{#if categoryId}}
+       <a data-id="{{categoryId}}" href="javascript:productList('{{categoryId}}');" class="cc_promo_link promo" style="background-image: url({{fullImageURL}});"><img class="img-responsive img-rounded cc_promo_img" data-id="{{categoryId}}" src="{{fullImageURL}}" alt="{{altMsg}}" />
+        <div class="promo-body">
+          <h3>{{shortDecription}}</h3>
+          <p>{{longDesc}}</p>
+          <p><button class="btn btn-default">Learn More</button></p>
+        </div>
+       </a>
+      {{else}}{{#if externalLink}}
+       <a href="{{externalLink}}" class="cc_promo_link" {{#if isNewWindow}}target="_blank"{{/if}}><img class="img-responsive img-rounded cc_promo_img" src="{{fullImageURL}}" alt="{{altMsg}}" /></a>
+      {{else}}{{#if isDownload }}
+       <a href="{{downloadUri}}" target="_blank" class="cc_promo_link"><img class="img-responsive img-rounded cc_promo_img" src="{{fullImageURL}}" alt="{{altMsg}}" /></a>
+      {{else}}{{#if noLink }}
+       <img src="{{fullImageURL}}" class="img-responsive img-rounded cc_promo_img" alt="{{altMsg}}" /><br>
+      {{/if}}{{/if}}{{/if}}{{/if}}{{/if}}
+     {{/each}}
+     </div>
+    </div>
+   {{/if}}
+  </script>
+<script>
+jQuery(function($){
+  CCRZ.uiProperties.PromoDisp.phone.tmpl = 'kf_Promo';
+  CCRZ.uiProperties.PromoDisp.desktop.tmpl = 'kf_Promo';
+});
+</script>
+    
+</apex:page>

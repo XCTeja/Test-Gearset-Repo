@@ -1,0 +1,79 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false">
+  <script id="XCHeaderDesktop" type="text/template">
+ <!-- ==========================
+        HEADER - START 
+    =========================== -->
+    <div class="top-header hidden-xs">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5">
+                    <ul class="list-inline contacts">
+                        <li><i class="fa fa-envelope"></i> help@umarket.com</li>
+                        <li><i class="fa fa-phone"></i> 754 213 456</li>
+                    </ul>
+                </div>
+                <div class="col-sm-7 text-right">
+                    <ul class="list-inline links">
+                        <li><a class="acct" id="goToAccount" href="#" >{{pageLabelMap 'Component_SiteHeader_MyAccount'}}</a></li>
+                        <li><span class="loginoutsec"></li>
+                    </ul>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="navbar main_navigation_container">
+ <div class="navbar-header">
+                <a href="#" id="logoUrl" class="navbar-brand"><span>u</span>Market</a>                       
+            </div>      
+  <!--<div class="navbar-inner">-->
+   <div class="container">
+    
+    
+    <!--<div class="nav-collapse collapse">-->
+    <p class="navbar-text hidden-xs hidden-sm">The easiest way to shop</p>
+     <ul class="nav">
+      {{#each .}}
+       {{#if children}}
+        <li class="dropdown">
+         <a data-toggle="dropdown" class="dropdown-toggle " href="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}  <b class="caret"></b></a>
+         <ul class="dropdown-menu">
+          {{> subMenuItem}}
+         </ul>
+        </li>
+       {{else}}
+        {{#ifEquals mType 'Category'}}
+         <li><a class="category" href="javascript:void(0);" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+        {{/ifEquals}}
+        {{#ifEquals mType 'Product'}}
+         <li><a class="product" href="javascript:void(0);" data-id="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+        {{/ifEquals}}
+        {{#ifEquals mType 'URL'}}
+         <li><a class="menuTypeURL" href="javascript:void(0);" data-href="{{linkURL}}" data-menuid="{{menuId}}" {{linkTarget openInNewWindow}}>{{displayName}}</a></li>
+        {{/ifEquals}}
+        {{#ifEquals mType 'None'}}
+         <li><a href="javascript:void(0);" data-menuid="{{menuId}}">{{displayName}}</a></li>
+        {{/ifEquals}}
+       {{/if}}
+      {{/each}}
+      <li class="dropdown navbar-cart hidden-xs">
+                        <span class="cartsec"><a id="cartHeader" class="chead cartHeaderLink" href="#"></a></span>                        
+                    </li>
+                    <li class="dropdown navbar-search hidden-xs">                        
+                        <div class="search_form" />
+                    </li>
+     </ul>
+    </div>
+   <!--</div>
+  </div>-->
+ </header>
+    <!-- ==========================
+        HEADER - END 
+    =========================== -->  
+</script>
+<script>
+        jQuery(function($){
+            CCRZ.uiProperties.headerView.desktop.tmpl = 'XCHeaderDesktop';            
+        });
+    </script>
+
+</apex:page>

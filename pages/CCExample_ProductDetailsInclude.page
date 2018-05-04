@@ -1,0 +1,159 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false">
+    <script id="ExampleProductDetail-Desktop" type="text/template">
+        <section class="content products">
+        <div class="container">
+            <article class="product-item product-single">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="product-carousel-wrapper">
+                            <div id="product-carousel">
+                                <div class="item">{{displayImage this.product.mediaWrapper 'mainProdImage prodDetail'}}</div>
+
+                                {{#if this.mediaWrappers.[Alternate Images]}}
+                                <div class="item"><img src="{{productImage ../product.mediaWrapper}}" data-id="{{../product.mediaWrapper.altMessage}}" class="img-responsive" alt=""></div>
+                                {{#each this.mediaWrappers.[Alternate Images]}}
+                                <div class="item"><img src="{{productImage this}}" data-id="{{this.altMessage}} class="img-responsive" alt=""></div>
+                                {{/each}}
+                                <!--{{else}}-->
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="product-body">
+                        <div class="product_detail_item phoneProductItem wishFinder" data-sku="{{this.product.prodBean.sku}}">
+                            <h3>{{this.product.prodBean.name}}</h3>
+                            <div class="product-labels">
+                                <span class="label label-info">new</span>
+                                <span class="label label-danger">sale</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <span class="price">
+                                <del><span class="amount">{{price this.product.basePrice}}</span></del>
+                                <ins><span class="amount">{{price this.product.price}}</span></ins>
+                            </span>
+                            <ul class="list-unstyled product-info">
+                                <li><span>ID</span>{{this.product.prodBean.sku}}</li>
+                                <li><span>Brand</span>[[Will try to add custom field]]</li>
+                                <li><span>Tags</span>[[Will try to add custom field]]</li>
+                                <li><span>Availability</span>
+                                <!--{{#ifStoreSetting 'InventoryCheckFlag__c'}}
+                                    <div class="value">{{this.product.inventory}}</div>
+                                {{else}}-->
+                                    <div class="value">{{this.product.availMsg}}</div>
+                                <!--{{/ifStoreSetting}}-->
+                                </li>
+
+                            </ul>
+                            <p>{{{this.product.prodBean.shortDesc}}}</p>
+                            <div class="product-form clearfix">
+                                <div class="row row-no-padding">
+                                    
+                                    <div class="col-md-3 col-sm-4">
+                                        <div class="product-quantity clearfix">                                             
+                                            <a class="btn btn-default" id="qty-minus">-</a>
+                                            <input type="text" id="qty" value="1" class="input-text entry plus_minus" style="display:inline-block; width:44px; text-align:center; height:38px; float:left; margin-left:-2px; z-index:510;" />
+                                            <a class="btn btn-default" id="qty-plus">+</a> 
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3 col-sm-4">
+                                        <div class="product-size">
+                                            <form class="form-inline">
+                                                <div class="form-group">
+                                                    <label>Size:</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control">
+                                                        <option>XS</option>
+                                                        <option>S</option>
+                                                        <option selected="selected">M</option>
+                                                        <option>L</option>
+                                                        <option>XL</option>
+                                                        <option>XXL</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3 col-sm-4">
+                                        <div class="product-color">
+                                            <form class="form-inline">
+                                                <div class="form-group">
+                                                    <label>Color:</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control">
+                                                        <option selected="selected">Black</option>
+                                                        <option>White</option>
+                                                        <option>Red</option>
+                                                        <option>Yellow</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--<div class="col-md-3 col-sm-12">
+                                        <a href="" class="btn btn-primary add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    </div>-->
+                                    {{#if this.product.canAddtoCart}}
+                                    <div class="action" >
+                            <button class="btn btn-primary addItem" type="button" data-sku="{{this.product.prodBean.sku}}">{{pageLabelMap 'Component_MiniwishList_AddToCart'}}</button>
+                        </div>
+                        {{/if}}
+                        <!--<div class="wishButtons plus_minus"></div>  -->                                  
+                                </div>
+                            </div>
+                            <ul class="list-inline product-links">
+                                <li><a href="#"><i class="fa fa-heart"></i>Add to wishlist</a></li>
+                                <li><a href="#"><i class="fa fa-exchange"></i>Compare</a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i>Email to friend</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </article>  
+            
+            <div class="tabs product-tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class=""><a href="#description" role="tab" data-toggle="tab" aria-controls="description" aria-expanded="false">Description</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="description">
+                        <h4>Etiam posuere id nulla</h4>
+                        <p>Ut arcu ipsum, cursus vitae ligula id, semper sodales mauris. Etiam posuere id nulla lacinia convallis. Sed tortor nisi, semper a auctor id, aliquet et sem. Aliquam suscipit lectus ut arcu pretium, et malesuada tortor finibus. Pellentesque sed arcu nec lectus vulputate pharetra. Vestibulum lobortis dolor massa, et tristique ex tincidunt at. Donec imperdiet elit elit, sit amet posuere dui auctor id. Nullam vel augue varius, ornare purus a, mattis diam.</p>
+                        <ul>
+                            <li>Etiam posuere id nulla lacinia convallis</li>
+                            <li>Sed tortor nisi, semper a auctor id, aliquet</li>
+                            <li>Curabitur eros dui</li>
+                        </ul>
+                        <h5>Pellentesque vel felis pharetra</h5>
+                        <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur eros dui, viverra nec nisl quis, aliquet auctor nisi. Pellentesque vel felis pharetra, accumsan purus eu, mattis est. Aliquam tincidunt efficitur nibh nec volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla ut nisl eu nisi vestibulum consectetur. Quisque egestas dolor neque, at bibendum lorem convallis sed. Maecenas finibus metus ante, non tristique sapien sagittis id. Nam et iaculis massa. Nulla facilisi. Integer at nunc neque. Phasellus posuere et nunc ac blandit. Mauris sollicitudin, sapien vitae luctus pellentesque, risus nunc mattis purus, sed laoreet ante leo congue sem. Etiam eget nisi ipsum. Phasellus consectetur vel turpis vitae eleifend.</p>
+                        <h5>Phasellus et libero</h5>
+                        <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam erat volutpat. Phasellus et libero nec ligula imperdiet viverra quis et turpis. Aenean quis mattis nunc. Mauris consectetur sed eros sed convallis. Morbi non elit in est tempus scelerisque congue a purus. In eget ullamcorper magna. Nam libero turpis, ullamcorper sit amet molestie nec, cursus ac urna. Suspendisse blandit finibus est, quis pulvinar arcu pretium vel. Aenean et leo nisi. Donec at iaculis ligula. Proin condimentum lobortis ex, in congue nisi molestie eget.</p>
+                    </div>  
+                 </div>
+              </div>       
+            
+        </div>
+    </section>
+    </script>
+    <script>
+        jQuery(function($){
+            CCRZ.uiProperties.productDetailView.desktop.tmpl = 'ExampleProductDetail-Desktop';
+            $(".right_column").hide();
+            $(".left_column").hide();
+            $(".hidden-tablet").hide();
+        });
+    </script>
+     
+</apex:page>

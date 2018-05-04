@@ -1,0 +1,212 @@
+<apex:page controller="AddressVerificationCtrl2" action="{!Init}" showHeader="false" >
+    <style>
+    .CSSTableGenerator {
+        margin: 0 auto;
+        padding: 0px;
+        width: 720px;
+        box-shadow: 10px 10px 5px #888888;
+        border: 1px solid #000000;
+        -moz-border-radius-bottomleft: 8px;
+        -webkit-border-bottom-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        -moz-border-radius-bottomright: 8px;
+        -webkit-border-bottom-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        -moz-border-radius-topright: 8px;
+        -webkit-border-top-right-radius: 8px;
+        border-top-right-radius: 8px;
+        -moz-border-radius-topleft: 8px;
+        -webkit-border-top-left-radius: 8px;
+        border-top-left-radius: 8px;
+    }
+    
+    .CSSTableGenerator table {
+        width: 680px;
+        height: 100%;
+        margin: 0 auto;
+        padding: 0px;
+    }
+    
+    .CSSTableGenerator th {
+        text-align: center;
+        background-color: #B1B1B1;
+        Height: 34px;
+        border-bottom: 1px solid black;
+    }
+    
+    .thtop {
+        -moz-border-radius-topright: 8px;
+        -webkit-border-top-right-radius: 8px;
+        border-top-right-radius: 8px;
+        -moz-border-radius-topleft: 8px;
+        -webkit-border-top-left-radius: 8px;
+        border-top-left-radius: 8px;
+    }
+    
+    .thbottom {
+        -moz-border-radius-bottomleft: 8px;
+        -webkit-border-bottom-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        -moz-border-radius-bottomright: 8px;
+        -webkit-border-bottom-right-radius: 8px;
+    }
+    
+    .CSSTableGenerator td {
+        width: 25%;
+    }
+    
+    .CSSTableGenerator tr:last-child td:last-child {
+        -moz-border-radius-bottomright: 14px;
+        -webkit-border-bottom-right-radius: 14px;
+        border-bottom-right-radius: 14px;
+    }
+    
+    .CSSTableGenerator table tr:first-child td:first-child {
+        -moz-border-radius-topleft: 14px;
+        -webkit-border-top-left-radius: 14px;
+        border-top-left-radius: 14px;
+    }
+    
+    .CSSTableGenerator table tr:first-child td:last-child {
+        -moz-border-radius-topright: 14px;
+        -webkit-border-top-right-radius: 14px;
+        border-top-right-radius: 14px;
+    }
+    
+    .CSSTableGenerator tr:last-child td:first-child {
+        -moz-border-radius-bottomleft: 14px;
+        -webkit-border-bottom-left-radius: 14px;
+        border-bottom-left-radius: 14px;
+    }
+    
+    .CSSTableGenerator tr:hover td {}
+    
+    .CSSTableGenerator tr:nth-child(odd) {
+        background-color: #ffd4aa;
+    }
+    
+    .CSSTableGenerator tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+    
+    .CSSTableGenerator td {
+        vertical-align: middle;
+        border: 1px solid #000000;
+        border-width: 0px 1px 1px 0px;
+        text-align: left;
+        padding: 7px;
+        color: #000000;
+    }
+    
+    .CSSTableGenerator tr:last-child td {
+        border-width: 0px 1px 0px 0px;
+    }
+    
+    .CSSTableGenerator tr td:last-child {
+        border-width: 0px 0px 1px 0px;
+    }
+    
+    .CSSTableGenerator tr:last-child td:last-child {
+        border-width: 0px 0px 0px 0px;
+    }
+    
+    .CSSTableGenerator tr:first-child td {
+        background: -o-linear-gradient(bottom, #ff7f00 5%, #bf5f00 100%);
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ff7f00), color-stop(1, #bf5f00));
+        background: -moz-linear-gradient( center top, #ff7f00 5%, #bf5f00 100%);
+        filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#ff7f00", endColorstr="#bf5f00");
+        background: -o-linear-gradient(top, #ff7f00, bf5f00);
+        background-color: #ff7f00;
+        border: 0px solid #000000;
+        text-align: center;
+        border-width: 0px 0px 1px 1px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+    
+    .CSSTableGenerator tr:first-child:hover td {
+        background: -o-linear-gradient(bottom, #ff7f00 5%, #bf5f00 100%);
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ff7f00), color-stop(1, #bf5f00));
+        background: -moz-linear-gradient( center top, #ff7f00 5%, #bf5f00 100%);
+        filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#ff7f00", endColorstr="#bf5f00");
+        background: -o-linear-gradient(top, #ff7f00, bf5f00);
+        background-color: #ff7f00;
+    }
+    
+    .CSSTableGenerator tr:first-child td:first-child {
+        border-width: 0px 0px 1px 0px;
+    }
+    
+    .CSSTableGenerator tr:first-child td:last-child {
+        border-width: 0px 0px 1px 1px;
+    }
+    </style>
+    <apex:form >
+        <apex:outputPanel id="dataPanel" layout="block" style="width:100%;    margin-top:75px; height:220px">
+            <div style="width:100%; margin: 0 auto;text-align:center">
+                <h1>Johnson USPS Address Verification</h1>
+            </div>
+           <!-- <apex:outputPanel layout="block" style="width:100%; margin: 0 auto" rendered="{!IsAccount}">
+                <apex:selectRadio value="{!AccountSelect}" style="margin: 0 auto">
+                    <apex:selectOption ItemLabel="Billing" itemValue="Billing" />
+                    <apex:selectOption ItemLabel="Shipping" itemValue="Shipping" />
+                    <apex:actionSupport event="onchange" reRender="dataPanel" action="{!SetData}" />
+                </apex:selectRadio>
+            </apex:outputPanel>
+-->
+            <table class="CSSTableGenerator">
+                <tr>
+                    <th class="thtop" colspan="2">Salesforce Address222</th>
+                    <th class="thtop" colspan="2"><span>USPS Address3333</span>
+                        <br/><span style="color:red;font-weight:bold">{!ErrorMsg} {!ReturnedAddress.Address}</span> </th>
+                </tr>
+                <tr>
+                    <td>Street Address1</td>
+                    <td>
+                          <apex:inputtext value="{!address1}"  /> 
+                        </td>
+                    <td>Street Address1</td>
+                    <td> {!ReturnedAddress.Address} </td>
+                </tr>
+               <!-- <tr>
+                    <td>Street Address2</td>
+                    <td>
+                        <apex:inputtext value="{!address2}" /> </td>
+                    <td>Street Address2</td>
+                    <td>{!ReturnedAddress.Address2}</td>
+                </tr>                
+
+                --><tr>
+                    <td>City</td>
+                    <td>
+                        <apex:inputtext value="{!city}" /> </td>
+                    <td>City</td>
+                    <td>{!ReturnedAddress.City}</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>
+                        <apex:inputtext value="{!state}" /> </td>
+                    <td>State</td>
+                    <td>{!ReturnedAddress.State}</td>
+                </tr>
+                <tr>
+                    <td>Zip Code</td>
+                    <td>
+                        <apex:inputtext value="{!zip5}" /> </td>
+                    <td>Zip Code</td>
+                    <td>{!ReturnedAddress.Zip5}</td>
+                </tr>
+                <tr>
+                    <th colspan="4" class="thbottom">
+                        <div style="text-align:right; margin-right: 18px;">
+                            <apex:commandButton value="Verify" action="{!CheckAddress}" reRender="dataPanel" />
+                           <!-- <apex:commandButton value="Accept" action="{!SaveAddress}" oncomplete="window.close();" />-->
+                            <apex:commandButton value="Cancel"  onclick="window.close();" />
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>
