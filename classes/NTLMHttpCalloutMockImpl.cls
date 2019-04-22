@@ -48,3 +48,4 @@ global class NTLMHttpCalloutMockImpl implements HttpCalloutMock {
 			return res;
 		}
 	}
+}
