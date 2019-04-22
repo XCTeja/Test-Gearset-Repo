@@ -13,6 +13,8 @@ global class NTLMHttpCalloutMockImpl implements HttpCalloutMock {
 			System.debug('Step 0');
 			res.setHeader('WWW-Authenticate', 'NTLM');
 			res.setStatusCode(401);
+			
+			return res;
 
 		} else {
 
